@@ -45,17 +45,21 @@ export default function MainLayout({
             <main className="flex-grow">
                 {children}
             </main>
-            {!isChatOpen && (
-                <button
-                    onClick={() => setIsChatOpen(true)}
-                    className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
-                >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Liên hệ</span>
-                </button>
-            )}
             {/* Chat Widget */}
-            {isChatOpen && <ChatWidget onClose={() => setIsChatOpen(false)} />}
+            <div className="container mx-auto px-4">
+                {!isChatOpen && (
+                    <div className="flex justify-end mb-4">
+                        <button
+                            onClick={() => setIsChatOpen(true)}
+                            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                        >
+                            <MessageCircle className="w-5 h-5" />
+                            <span>Liên hệ</span>
+                        </button>
+                    </div>
+                )}
+                {isChatOpen && <ChatWidget onClose={() => setIsChatOpen(false)} />}
+            </div>
 
             {/* Footer */}
             <footer className="bg-gray-100">
