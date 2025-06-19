@@ -115,7 +115,7 @@ const ChatWidget = ({ onClose }: ChatWidgetProps) => {
     }
 
     return (
-        <div className="fixed bottom-4 right-4 z-50 w-full max-w-sm bg-white rounded-lg shadow-lg flex flex-col h-[500px] max-h-[80vh]">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-4 sm:right-4 z-50 w-full sm:w-[400px] bg-white sm:rounded-lg shadow-lg flex flex-col h-full sm:h-[500px] sm:max-h-[80vh]">
             {/* Header: Thông tin tư vấn viên và nút hành động */}
             <div className="flex justify-between items-center p-4 border-b bg-red-500 text-white">
                 <div className="flex items-center gap-3 ">

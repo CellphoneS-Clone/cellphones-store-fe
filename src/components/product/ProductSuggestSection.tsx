@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useRef } from 'react';
-import { ProductCard } from './ProductCard';
 import { ChevronLeftIcon, ChevronRightIcon } from '../icons/BannerMenuIcon';
 import { CustomRadialIcon } from '../icons/MainIcon';
+import ProductCard from './ProductCard';
 
 interface Product {
   id: number;
@@ -58,11 +58,7 @@ export function ProductSuggestSection({ products, formatPrice }: ProductSuggestS
         <div ref={suggestRef} className="overflow-hidden">
           <div className="grid grid-flow-col auto-cols-[minmax(224.8px,_1fr)] gap-2 snap-x snap-mandatory">
             {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                formatPrice={formatPrice}
-              />
+              <ProductCard key={product.id} />
             ))}
           </div>
         </div>

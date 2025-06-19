@@ -17,7 +17,7 @@ import {
 import { MenuBanner } from '@/components/layout/MenuBanner';
 import { SlidingBanner } from '@/components/layout/SlidingBanner';
 import { RightBanner } from '@/components/layout/RightBanner';
-import { ProductSuggestSection } from '@/components/product/ProductSuggestSection';
+// import { ProductSuggestSection } from '@/components/product/ProductSuggestSection';
 import { ProductListSection } from '@/components/product/ProductListSection';
 import { CategorySection } from '@/components/category/CategorySection';
 import { PaymentBannerSection } from '@/components/banner/PaymentBannerSection';
@@ -192,7 +192,7 @@ export default function HomePage() {
       </div>
 
       <main className="container mx-auto py-4">
-        <ProductSuggestSection products={products} formatPrice={formatPrice} />
+        {/* <ProductSuggestSection products={products} formatPrice={formatPrice} /> */}
         <ProductListSection
           products={products}
           relatedTags={relatedTags}
