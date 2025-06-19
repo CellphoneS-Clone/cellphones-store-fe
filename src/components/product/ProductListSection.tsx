@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ProductCard } from './ProductCard';
+import ProductCard from './ProductCard';
 // import { ChevronLeftIcon, ChevronRightIcon } from '../icons/BannerMenuIcon';
 
 interface Product {
@@ -45,36 +45,35 @@ export function ProductListSection({ products, relatedTags, formatPrice }: Produ
 
       {/* Danh sách sản phẩm */}
       <div className="relative group mx-auto max-w-[1156px] w-full px-2">
-              {/* Nút trái */}
-              {/* <button
+        {/* Nút trái */}
+        {/* <button
                 onClick={() => scrollSuggest('left')}
                 className="hidden group-hover:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 shadow-md rounded-full"
               >
                 <ChevronLeftIcon className="w-6 h-6 text-gray-600" />
               </button> */}
-      
-              {/* Danh sách sản phẩm */}
-              <div className="overflow-hidden">
-              {/* <div ref={suggestRef} className="overflow-hidden"> */}
-                <div className="grid grid-flow-col auto-cols-[minmax(224.8px,_1fr)] gap-2 snap-x snap-mandatory py-3">
-                  {products.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      formatPrice={formatPrice}
-                    />
-                  ))}
-                </div>
-              </div>
-      
-              {/* Nút phải */}
-              {/* <button
+
+        {/* Danh sách sản phẩm */}
+        <div className="overflow-hidden">
+          {/* <div ref={suggestRef} className="overflow-hidden"> */}
+          <div className="grid grid-flow-col auto-cols-[minmax(224.8px,_1fr)] gap-2 snap-x snap-mandatory py-3">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Nút phải */}
+        {/* <button
                 onClick={() => scrollSuggest('right')}
                 className="hidden group-hover:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 shadow-md rounded-full"
               >
                 <ChevronRightIcon className="w-6 h-6 text-gray-600" />
               </button> */}
-            </div>
+      </div>
     </div>
   );
 }

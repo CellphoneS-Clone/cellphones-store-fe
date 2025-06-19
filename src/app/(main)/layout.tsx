@@ -1,7 +1,7 @@
+'use client'
 import Header from '@/app/(main)/layouts/header';
 import Footer from '@/app/(main)/layouts/footer';
 import "../globals.css";
-'use client'
 import { useState } from 'react'
 import ChatWidget from '@/components/chat/ChatWidget'
 import Link from 'next/link'
@@ -16,11 +16,11 @@ export default function MainLayout({
 
     return (
         <div className="min-h-screen flex flex-col">
-        <Header />
+            <Header />
             <main className="flex-grow">
                 {children}
             </main>
-                    {!isChatOpen && (
+            {!isChatOpen && (
                 <button
                     onClick={() => setIsChatOpen(true)}
                     className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"

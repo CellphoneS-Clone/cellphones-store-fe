@@ -25,14 +25,14 @@ export const metadata = {
     },
 };
 
-export default function LoginPage() {
+function LoginPage() {
     return (
         <div className="min-h-screen w-full">
             <div className="w-full px-4 py-6 tablet:px-8 tablet:py-16">
                 <LoginForm />
             </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default LoginPage;

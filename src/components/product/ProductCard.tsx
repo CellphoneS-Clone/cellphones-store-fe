@@ -7,35 +7,22 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
-interface ProductCardProps {
-    id: string
-    name: string
-    price: number
-    originalPrice?: number
-    image: string
-    rating?: number
-    discount?: number
-    smemberDiscount?: number
-    studentDiscount?: number
-    promotion?: string
-}
-
-export default function ProductCard({
-    id,
-    name,
-    price,
-    originalPrice,
-    image,
-    rating = 5,
-    discount,
-    promotion
-}: ProductCardProps) {
+function ProductCard() {
     const [isFavorite, setIsFavorite] = useState(false)
+
+    // Dữ liệu cứng mẫu
+    const id = "iphone-15-pro-max-256gb";
+    const name = "iPhone 15 Pro Max 256GB";
+    const price = 32990000;
+    const originalPrice = 34990000;
+    const image = "/images/iphone-15-pro-max.png"; // Đảm bảo ảnh này có trong public/images
+    const rating = 5;
+    const discount = 6;
+    const promotion = "Tặng phiếu mua hàng 500.000đ";
 
     const handleFavoriteClick = (e: React.MouseEvent) => {
         e.preventDefault()
         setIsFavorite(!isFavorite)
-        // TODO: Thêm logic lưu trạng thái yêu thích vào database
     }
 
     return (
@@ -119,7 +106,6 @@ export default function ProductCard({
                         )}
                     >
                         <span className="text-xs">Yêu thích</span>
-
                         <Heart
                             className={cn(
                                 "h-4 w-4 mr-1",
@@ -131,4 +117,5 @@ export default function ProductCard({
             </CardFooter>
         </Card>
     )
-} 
+}
+export default ProductCard;
