@@ -1,74 +1,134 @@
 'use client'
-
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Heart } from 'lucide-react';
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  alt: string;
-  price: number;
-  originalPrice: number;
-  sNullPrice: number;
-  sStudentDiscount: number;
-  promotion: string;
-  rating: number;
-}
+import Image from 'next/image'
+import Link from 'next/link'
+import { Star, Heart } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 interface ProductCardProps {
-  product: Product;
-  formatPrice: (price: number) => string;
+    id: string
+    name: string
+    price: number
+    originalPrice?: number
+    image: string
+    rating?: number
+    discount?: number
+    smemberDiscount?: number
+    studentDiscount?: number
+    promotion?: string
 }
 
-export function ProductCard({ product, formatPrice }: ProductCardProps) {
-  return (
-    <div
-      key={product.id}
-      className="relative bg-white rounded-sm shadow-sm min-w-[200px] snap-start"
-    >
-      {/* Nội dung sản phẩm */}
-      <Link href={`/product/${product.id}`} className="block p-3">
-        <Image
-          src={product.image}
-          alt={product.alt}
-          width={140} 
-          height={140}
-          className="mx-auto transition-transform duration-300 hover:-translate-y-2"
-        />
-        <h3 className="text-sm font-semibold text-gray-800 mt-2 h-[60px] line-clamp-3">
-          {product.name}
-        </h3>
-        <div className="mt-2">
-          <div className="flex items-end">
-            <p className="text-lg font-bold text-red-600">
-              {formatPrice(product.price)}
-            </p>
-            <p className="text-sm text-gray-500 line-through ml-2">
-              {formatPrice(product.originalPrice)}
-            </p>
-          </div>
-          <p className="text-xs text-gray-600 mt-1">
-            S-Student giảm thêm{' '}
-            <span className="font-bold text-red-600">
-              {formatPrice(product.sStudentDiscount)}
-            </span>
-          </p>
-        </div>
-      </Link>
-      {/* Yêu thích */}
-      <div className="flex justify-end items-center px-3 pb-3">
-        <span className="text-xs text-gray-500 mr-1">Yêu thích</span>
-        <button className="text-red-600 hover:text-red-800">
-          <Heart className="w-5 h-5 hover:fill-red-600 transition-all duration-200" />
-        </button>
-      </div>
-      {/* Nhãn */}
-      <span className="absolute top-0 right-0 bg-white border border-blue-700 text-blue-700 text-[10px] font-medium rounded-sm px-1 py-0.5 hover:bg-blue-600 hover:text-white transition-all duration-200">
-        Trả góp 0%
-      </span>
-    </div>
-  );
-}
+export default function ProductCard({
+    id,
+    name,
+    price,
+    originalPrice,
+    image,
+    rating = 5,
+    discount,
+    promotion
+}: ProductCardProps) {
+    const [isFavorite, setIsFavorite] = useState(false)
+
+    const handleFavoriteClick = (e: React.MouseEvent) => {
+        e.preventDefault()
+        setIsFavorite(!isFavorite)
+        // TODO: Thêm logic lưu trạng thái yêu thích vào database
+    }
+
+    return (
+        <Card className="w-[224.8px] mr-2.5 overflow-hidden">
+            {/* Phần hình ảnh */}
+            <CardHeader className="p-0 relative">
+                <Link href={`/products/${id}`} className="block">
+                    <div className="relative aspect-square">
+                        <Image
+                            src={image}
+                            alt={name}
+                            fill
+                            className="object-cover"
+                        />
+                        {/* Thông tin giảm giá */}
+                        <div className="absolute top-0 left-0 flex flex-col gap-1">
+                            {discount && (
+                                <div className="bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-r-md shadow-lg transform -translate-x-2 hover:translate-x-0 transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-105 hover:bg-red-600">
+                                    -{discount}%
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </Link>
+            </CardHeader>
+
+            {/* Phần thông tin sản phẩm */}
+            <CardContent className="p-3">
+                <Link href={`/products/${id}`} className="block">
+                    <h3 className="text-sm font-medium line-clamp-2 mb-2">{name}</h3>
+                    <div className="space-y-1">
+                        {/* Giá sản phẩm */}
+                        <div className="flex items-baseline gap-2">
+                            <p className="text-lg font-bold text-primary-500">
+                                {new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }).format(price)}
+                            </p>
+                            {originalPrice && (
+                                <p className="text-sm text-gray-500 line-through">
+                                    {new Intl.NumberFormat('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    }).format(originalPrice)}
+                                </p>
+                            )}
+                        </div>
+                        {promotion && (
+                            <div className="text-xs text-gray-600 mt-1">
+                                {promotion}
+                            </div>
+                        )}
+                    </div>
+                </Link>
+            </CardContent>
+
+            {/* Phần footer với đánh giá và nút yêu thích */}
+            <CardFooter className="px-3 pb-3 pt-0">
+                <div className="flex items-center justify-between w-full">
+                    {/* Đánh giá sao */}
+                    <div className="flex items-center gap-0.5">
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <Star
+                                key={index}
+                                size={15}
+                                className={cn(
+                                    "text-gray-300",
+                                    index < rating && "text-yellow-400 fill-yellow-400"
+                                )}
+                            />
+                        ))}
+                    </div>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleFavoriteClick}
+                        className={cn(
+                            "text-gray-500 hover:bg-transparent transition-colors duration-200",
+                            isFavorite ? "text-red-500" : "hover:text-red-500"
+                        )}
+                    >
+                        <span className="text-xs">Yêu thích</span>
+
+                        <Heart
+                            className={cn(
+                                "h-4 w-4 mr-1",
+                                isFavorite && "fill-red-500"
+                            )}
+                        />
+                    </Button>
+                </div>
+            </CardFooter>
+        </Card>
+    )
+} 
