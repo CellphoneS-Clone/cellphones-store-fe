@@ -1,3 +1,4 @@
+
 import LoginForm from '@/components/auth/LoginForm';
 
 export const metadata = {
@@ -30,6 +31,8 @@ export default function LoginPage() {
             <div className="w-full px-4 py-6 tablet:px-8 tablet:py-16">
                 <LoginForm />
             </div>
-        </div>
-    );
-} 
+    </div>
+  );
+};
+
+export default LoginPage;
