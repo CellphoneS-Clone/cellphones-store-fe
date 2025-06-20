@@ -1,7 +1,7 @@
+'use client'    
 import Header from '@/app/(main)/layouts/header';
 import Footer from '@/app/(main)/layouts/footer';
 import "../globals.css";
-'use client'
 import { useState } from 'react'
 import ChatWidget from '@/components/chat/ChatWidget'
 import Link from 'next/link'

@@ -1,9 +1,9 @@
 'use client'
-
 import React, { useRef } from 'react';
-import { ProductCard } from './ProductCard';
 import { ChevronLeftIcon, ChevronRightIcon } from '../icons/BannerMenuIcon';
 import { CustomRadialIcon } from '../icons/MainIcon';
+import ProductCard from './ProductCard';
+
 
 interface Product {
   id: number;
@@ -60,8 +60,13 @@ export function ProductSuggestSection({ products, formatPrice }: ProductSuggestS
             {products.map((product) => (
               <ProductCard
                 key={product.id}
-                product={product}
-                formatPrice={formatPrice}
+                id={product.id.toString()} // Chuyển id thành string
+                name={product.name}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                image={product.image}
+                rating={product.rating}
+                promotion={product.promotion}
               />
             ))}
           </div>
