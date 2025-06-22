@@ -17,7 +17,9 @@ import {
 } from 'lucide-react';
 
 export const Sidebar = () => {
-    const pathname = usePathname();
+    const pathname = usePathname(); // Hook để lấy đường dẫn hiện tại, dùng để xác định active link.
+
+    // Mảng chứa thông tin các liên kết điều hướng
     const navLinks = [
         { href: '/information', icon: Home, label: 'Tổng quan' },
         { href: '/information/order', icon: ShoppingBag, label: 'Lịch sử mua hàng' },
@@ -32,6 +34,7 @@ export const Sidebar = () => {
     ];
 
     return (
+        // Container chính, ẩn trên mobile và hiển thị dạng block trên desktop (md)
         <div className="hidden md:block tablet:w-1/4 laptop:w-1/4 min-h-screen tablet:min-h-[calc(100vh-280px)] shrink-0 tablet:sticky top-[32px] left-0">
             <Card className="bg-white rounded-xl h-full w-full border shadow-sm">
                 <CardContent className="w-full h-full flex flex-col p-4">
@@ -42,12 +45,13 @@ export const Sidebar = () => {
                                 <div key={index}>
                                     <Link
                                         href={link.href}
-                                        target={link.external ? '_blank' : '_self'}
+                                        target={link.external ? '_blank' : '_self'} // Mở tab mới cho link ngoài
                                         className={`flex text-base items-center group relative transition-colors duration-200 rounded-md font-semibold ${isActive
-                                            ? 'bg-red-50 text-red-600 font-bold'
-                                            : 'text-neutral-600 hover:bg-red-50 hover:text-red-600'
+                                            ? 'bg-red-50 text-red-600 font-bold' // Style cho link active
+                                            : 'text-neutral-600 hover:bg-red-50 hover:text-red-600' // Style cho link thường
                                             }`}
                                     >
+                                        {/* Thanh dọc màu đỏ báo hiệu link active */}
                                         <div
                                             className={`absolute top-0 left-0 w-1 h-full shrink-0 rounded-r-full transition-colors duration-200 ${isActive ? 'bg-red-500' : 'bg-transparent group-hover:bg-red-500'
                                                 }`}
@@ -57,6 +61,7 @@ export const Sidebar = () => {
                                             <span>{link.label}</span>
                                         </div>
                                     </Link>
+                                    {/* Đường kẻ ngang phân cách nếu có */}
                                     {link.separator && (
                                         <div className="my-2 px-2">
                                             <div className="w-full h-[1px] bg-neutral-200"></div>
@@ -65,6 +70,7 @@ export const Sidebar = () => {
                                 </div>
                             );
                         })}
+                        {/* Nút Đăng xuất */}
                         <button className="flex text-base items-center group relative transition-colors duration-200 rounded-md text-neutral-600 hover:bg-red-50 hover:text-red-600 font-semibold">
                             <div className="absolute top-0 left-0 w-1 h-full shrink-0 rounded-r-full transition-colors duration-200 bg-transparent group-hover:bg-red-500"></div>
                             <div className="w-full px-4 py-3 flex items-center gap-3 text-left">

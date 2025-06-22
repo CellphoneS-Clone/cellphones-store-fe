@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 
-// Các trạng thái đơn hàng
+// Mảng chứa các trạng thái của đơn hàng để filter
 const statuses = [
     'Tất cả',
     'Chờ xác nhận',
@@ -21,25 +21,20 @@ const statuses = [
 ];
 
 export default function OrderPage() {
-    // State quản lý trạng thái đơn hàng đang chọn
+    // State quản lý tab trạng thái đang được chọn
     const [activeStatus, setActiveStatus] = useState(statuses[0]);
-    // State quản lý khoảng ngày được chọn
+    // State quản lý khoảng ngày được chọn trong calendar
     const [date, setDate] = useState<DateRange | undefined>(undefined);
-    // State quản lý việc mở/đóng DatePicker
+    // State quản lý việc mở/đóng calendar
     const [isPickerOpen, setIsPickerOpen] = useState(false);
 
     return (
         <div className="flex-auto min-w-0 space-y-4">
-            {/* Card tổng chứa toàn bộ nội dung lịch sử đơn hàng */}
             <Card className="bg-white w-full rounded-xl">
-                {/* Header của card: chứa filter trạng thái và filter ngày */}
                 <CardHeader className="p-4 md:p-6">
-
-                    {/* Thanh filter trạng thái đơn hàng */}
+                    {/* Component thanh cuộn ngang cho các tab trạng thái */}
                     <div className="border-b border-t border-neutral-200 overflow-x-auto scrollbar-hide">
-                        <ScrollContainer
-                            horizontal
-                        >
+                        <ScrollContainer horizontal >
                             <nav className="px-4 md:px-6 -mb-px flex space-x-6 min-w-max">
                                 {statuses.map((status) => (
                                     <button
@@ -56,11 +51,12 @@ export default function OrderPage() {
                             </nav>
                         </ScrollContainer>
                     </div>
-                    {/* Bộ lọc ngày mua hàng */}
+
+                    {/* Khu vực bộ lọc theo ngày */}
                     <div className="flex flex-col md:flex-row items-center md:items-center gap-y-2 md:gap-y-0 md:gap-x-4 w-full">
                         <h3 className="text-base font-semibold">Lịch sử mua hàng của bạn</h3>
                         <div className="relative w-full md:w-[260px]">
-                            {/* Nút mở DatePicker */}
+                            {/* Nút bấm để mở/đóng calendar */}
                             <Button
                                 variant={"outline"}
                                 className={cn(
@@ -73,6 +69,7 @@ export default function OrderPage() {
                                     <CalendarIcon className="h-4 w-4" />
                                     Chọn ngày
                                 </span>
+                                {/* Hiển thị khoảng ngày đã chọn */}
                                 <span className="text-xs text-neutral-500 font-normal">
                                     {date?.from ? (
                                         date.to ? (
@@ -87,7 +84,7 @@ export default function OrderPage() {
                                     )}
                                 </span>
                             </Button>
-                            {/* Hiển thị DatePicker khi mở */}
+                            {/* Component Calendar, chỉ hiển thị khi isPickerOpen là true */}
                             {isPickerOpen && (
                                 <div className="absolute right-0 top-full mt-2 z-10">
                                     <Card className="bg-white border rounded-md shadow-lg">
@@ -105,8 +102,8 @@ export default function OrderPage() {
                         </div>
                     </div>
                 </CardHeader>
-                {/* Nội dung danh sách đơn hàng */}
                 <CardContent className="p-4 md:p-6">
+                    {/* Nội dung danh sách đơn hàng sẽ được hiển thị ở đây */}
                     Thông tin đơn hàng sẽ được hiển thị ở đây.
                 </CardContent>
             </Card>

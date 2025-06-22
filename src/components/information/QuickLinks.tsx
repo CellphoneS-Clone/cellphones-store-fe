@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Gift, ShoppingBag, MapPin, BookOpen, UserCog } from 'lucide-react';
 
+
 export const QuickLinks = () => (
     <Card className="bg-white w-full px-small py-small tablet:px-1x-large tablet:py-medium rounded-1x-large mb-small">
         <CardContent className="w-full grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-4">
