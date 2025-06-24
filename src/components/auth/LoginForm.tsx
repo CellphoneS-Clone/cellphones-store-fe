@@ -27,6 +27,7 @@ export default function LoginForm() {
     };
 
     const handleCheckboxChange = (name: string) => (checked: boolean) => {
+
         setFormData((prev) => ({
             ...prev,
             [name]: checked,
