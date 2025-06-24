@@ -44,11 +44,6 @@ function EditFormDrawer({ open, onOpenChange }: { open: boolean, onOpenChange: (
                     </DrawerDescription>
                 </DrawerHeader>
                 <EditInfoForm onSave={() => onOpenChange(false)} />
-                <DrawerFooter className="pt-2">
-                    <DrawerClose asChild>
-                        <Button variant="outline">Hủy</Button>
-                    </DrawerClose>
-                </DrawerFooter>
             </DrawerContent>
         </Drawer>
     );
