@@ -10,6 +10,7 @@ import { StoreItem } from "@/components/header/StoreItem";
 import { DeliveryTrackingItem } from "@/components/header/DeliveryTrackingItem";
 import { CartItem } from "@/components/header/CartItem";
 import { UserItem } from "@/components/header/UserItem";
+import { MenuBanner } from "@/components/layout/MenuBanner";
 import {
   MenuIcon,
   LocationIcon,
@@ -19,8 +20,11 @@ import {
   CartIcon,
   UserIcon,
 } from "@/components/icons/HeaderIcons";
+import { useState } from "react";
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-[#d70018] shadow-md">
       <div className="max-w-[1200px] mx-auto flex items-center justify-between px-2 h-[64px]">
@@ -37,9 +41,11 @@ const Header = () => {
 
         <div className="flex items-center gap-x-2 flex-nowrap overflow-x-auto flex-1 justify-end">
           {/* Danh mục */}
-          <MenuItem icon={<MenuIcon className="w-6 h-6" />}>
-            <span>Danh mục</span>
-          </MenuItem>
+          <div onClick={() => setIsMenuOpen(true)}>
+            <MenuItem icon={<MenuIcon className="w-6 h-6" />}>
+              <span>Danh mục</span>
+            </MenuItem>
+          </div>
 
           {/* Xem giá tại */}
           <LocationItem
@@ -75,6 +81,14 @@ const Header = () => {
           <UserItem icon={<UserIcon className="w-6 h-6" />} name="Dương" />
         </div>
       </div>
+
+      {/* Menu Banner as Overlay */}
+      {isMenuOpen && (
+        <MenuBanner
+          isOverlay={true}
+          onClose={() => setIsMenuOpen(false)}
+        />
+      )}
     </header>
   );
 };
