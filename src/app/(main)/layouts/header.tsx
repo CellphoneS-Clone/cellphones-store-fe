@@ -21,81 +21,9 @@ import {
   UserIcon,
 } from "@/components/icons/HeaderIcons";
 import { useState } from "react";
-import {
-  PhoneTabletIcon,
-  LaptopIcon,
-  AudioIcon,
-  WatchCameraIcon,
-  HomeApplianceIcon,
-  AccessoryIcon,
-  TvIcon,
-  TradeInIcon,
-  RefurbishedIcon,
-  PromotionIcon,
-  TechNewsIcon,
-} from '@/components/icons/BannerMenuIcon';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // Menu items
-  const menuItems = [
-    {
-      icon: <PhoneTabletIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Điện thoại' }, { href: '', text: 'Tablet' }],
-      isMultiple: true,
-    },
-    {
-      icon: <LaptopIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Laptop' }],
-      isMultiple: false,
-    },
-    {
-      icon: <AudioIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Âm thanh' }],
-      isMultiple: false,
-    },
-    {
-      icon: <WatchCameraIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Đồng hồ' }, { href: '', text: 'Camera' }],
-      isMultiple: true,
-    },
-    {
-      icon: <HomeApplianceIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Đồ gia dụng' }],
-      isMultiple: true,
-    },
-    {
-      icon: <AccessoryIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Phụ kiện' }],
-      isMultiple: false,
-    },
-    {
-      icon: <TvIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Tivi' }],
-      isMultiple: false,
-    },
-    {
-      icon: <TradeInIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Thu cũ đổi mới' }],
-      isMultiple: false,
-    },
-    {
-      icon: <RefurbishedIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Hàng cũ' }],
-      isMultiple: false,
-    },
-    {
-      icon: <PromotionIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Khuyến mãi' }],
-      isMultiple: false,
-    },
-    {
-      icon: <TechNewsIcon className="w-6 h-6" />,
-      links: [{ href: '', text: 'Tin công nghệ' }],
-      isMultiple: false,
-    },
-  ];
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-[#d70018] shadow-md">
@@ -157,7 +85,6 @@ const Header = () => {
       {/* Menu Banner as Overlay */}
       {isMenuOpen && (
         <MenuBanner
-          menuItems={menuItems}
           isOverlay={true}
           onClose={() => setIsMenuOpen(false)}
         />
