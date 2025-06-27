@@ -15,7 +15,7 @@ function ProductCard() {
     const name = "iPhone 15 Pro Max 256GB";
     const price = 32990000;
     const originalPrice = 34990000;
-    const image = "/images/iphone-15-pro-max.png"; // Đảm bảo ảnh này có trong public/images
+    const image = "/images/ipad_pro.png"; // Đảm bảo ảnh này có trong public/images
     const rating = 5;
     const discount = 6;
     const promotion = "Tặng phiếu mua hàng 500.000đ";
