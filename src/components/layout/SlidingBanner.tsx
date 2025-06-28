@@ -26,31 +26,31 @@ export function SlidingBanner({ slides, slideTitles: initialSlideTitles }: Slidi
   const [slideTitles, setSlideTitles] = useState<SlideTitle[]>(
     initialSlideTitles.map((title, index) => ({
       ...title,
-      active: index === 0, // Đặt slide đầu tiên là active
+      active: index === 0, 
     }))
   );
 
-  // Hàm xử lý chuyển slide tiếp theo
+  // Hàm xử lý chuyển slide tiếp
   const handleNext = () => {
-    const nextSlide = (currentSlide + 1) % slides.length; // Loop về slide đầu khi đến cuối
+    const nextSlide = (currentSlide + 1) % slides.length; 
     setCurrentSlide(nextSlide);
     updateActiveTitle(nextSlide);
   };
 
-  // Hàm xử lý chuyển slide trước đó
+  // Hàm xử lý chuyển slide trước
   const handlePrev = () => {
-    const prevSlide = (currentSlide - 1 + slides.length) % slides.length; // Loop về slide cuối khi ở đầu
+    const prevSlide = (currentSlide - 1 + slides.length) % slides.length; 
     setCurrentSlide(prevSlide);
     updateActiveTitle(prevSlide);
   };
 
-  // Hàm xử lý khi click vào label
+  // Hàm xử lý khi click 
   const handleLabelClick = (index: number) => {
     setCurrentSlide(index);
     updateActiveTitle(index);
   };
 
-  // Cập nhật trạng thái active của label
+  // Cập nhật trạng thái active
   const updateActiveTitle = (index: number) => {
     setSlideTitles((prev) =>
       prev.map((title, i) => ({

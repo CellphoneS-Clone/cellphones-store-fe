@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 type ImageCarouselProps = {
   images: { src: string; alt: string }[];
   onImageClick?: (index: number) => void;
@@ -11,13 +13,15 @@ export default function ImageCarousel({ images, onImageClick }: ImageCarouselPro
       {images.map((image, index) => (
         <button
           key={index}
-          className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden"
+          className="relative w-16 h-16 bg-gray-100 rounded-lg overflow-hidden shrink-0"
           onClick={() => onImageClick?.(index)}
         >
-          <img
+          <Image
             src={image.src}
             alt={image.alt}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="64px"
           />
         </button>
       ))}
