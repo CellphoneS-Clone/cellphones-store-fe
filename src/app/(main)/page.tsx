@@ -1,19 +1,6 @@
 'use client'
 
 import React from 'react';
-import {
-    PhoneTabletIcon,
-    LaptopIcon,
-    AudioIcon,
-    WatchCameraIcon,
-    HomeApplianceIcon,
-    AccessoryIcon,
-    TvIcon,
-    TradeInIcon,
-    RefurbishedIcon,
-    PromotionIcon,
-    TechNewsIcon,
-} from '@/components/icons/BannerMenuIcon';
 import { MenuBanner } from '@/components/layout/MenuBanner';
 import { SlidingBanner } from '@/components/layout/SlidingBanner';
 import { RightBanner } from '@/components/layout/RightBanner';
@@ -110,74 +97,21 @@ export default function HomePage() {
         {/* Top Home Section */}
         <div className="flex flex-row flex-nowrap gap-4 h-full">
           <MenuBanner
-            menuItems={[
-              {
-                icon: <PhoneTabletIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Điện thoại' }, { href: '', text: 'Tablet' }],
-                isMultiple: true,
-              },
-              {
-                icon: <LaptopIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Laptop' }],
-                isMultiple: false,
-              },
-              {
-                icon: <AudioIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Âm thanh' }],
-                isMultiple: false,
-              },
-              {
-                icon: <WatchCameraIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Đồng hồ' }, { href: '', text: 'Camera' }],
-                isMultiple: true,
-              },
-              {
-                icon: <HomeApplianceIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Đồ gia dụng' }],
-                isMultiple: true,
-              },
-              {
-                icon: <AccessoryIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Phụ kiện' }],
-                isMultiple: false,
-              },
-              {
-                icon: <TvIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Tivi' }],
-                isMultiple: false,
-              },
-              {
-                icon: <TradeInIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Thu cũ đổi mới' }],
-                isMultiple: false,
-              },
-              {
-                icon: <RefurbishedIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Hàng cũ' }],
-                isMultiple: false,
-              },
-              {
-                icon: <PromotionIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Khuyến mãi' }],
-                isMultiple: false,
-              },
-              {
-                icon: <TechNewsIcon className="w-6 h-6" />,
-                links: [{ href: '', text: 'Tin công nghệ' }],
-                isMultiple: false,
-              },
-            ]}
+            // isOverlay={true}
           />
           <SlidingBanner
             slides={[
               { src: '/images/top_banner.png', alt: 'Mừng khai trương ưu đãi cực khủng', href: '' },
               { src: '/images/top_banner2.png', alt: 'Slide 2', href: '' },
+              { src: '/images/top_banner.png', alt: 'Mừng khai trương ưu đãi cực khủng2', href: '' },
+              { src: '/images/top_banner2.png', alt: 'Slide 3', href: '' },
+              { src: '/images/top_banner.png', alt: 'Mừng khai trương ưu đãi cực khủng3', href: '' },
             ]}
             slideTitles={[
               { label: 'GALAXY S25 ULTRA', active: true },
               { label: 'TECNO SPARK 30 PRO', active: false },
               { label: 'POCO X7 PRO', active: false },
-              { label: 'TAI NGHE SONY', active: true },
+              { label: 'TAI NGHE SONY', active: false },
               { label: 'VIVO V50 LITE', active: false },
             ]}
           />

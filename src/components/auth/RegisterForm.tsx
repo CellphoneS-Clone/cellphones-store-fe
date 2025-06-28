@@ -64,7 +64,7 @@ export default function RegisterForm() {
                 Đăng ký trở thành SMEMBER
             </h1>
             <Image
-                src="/images/register-ant.png"
+                src="/images/auth/logo_auth.png"
                 alt="Register Ant"
                 width={180}
                 height={180}
@@ -88,10 +88,18 @@ export default function RegisterForm() {
                     Google
                 </Button>
                 <div className="w-[5px] h-[5px] tablet:w-[7px] tablet:h-[7px] rounded-full bg-neutral-200 flex-shrink-0"></div>
+
                 <Button
                     variant="outline"
                     className="flex items-center justify-center gap-2 flex-1 min-w-[100px] tablet:min-w-[120px] min-h-[40px] tablet:min-h-[48px] text-sm tablet:text-base"
                 >
+                    <Image
+                        src="/images/auth/logo_zalo.png"
+                        alt="Google"
+                        width={25}
+                        height={24}
+                        className="w-[20px] h-[20px] tablet:w-[25px] tablet:h-[24px] object-contain"
+                    />
                     Zalo
                 </Button>
             </div>

@@ -1,16 +1,18 @@
-'use client'
+'use client';
+
 import Header from '@/app/(main)/layouts/header';
 import Footer from '@/app/(main)/layouts/footer';
 import "../globals.css";
-import { useState } from 'react'
-import ChatWidget from '@/components/chat/ChatWidget'
-import Link from 'next/link'
-import { MessageCircle } from 'lucide-react'
+import { useState } from 'react';
+import ChatWidget from '@/components/chat/ChatWidget';
+import Link from 'next/link';
+import { MessageCircle } from 'lucide-react';
+import { useMenu } from '@/context/MenuContext';
 
 export default function MainLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode;
 }) {
     const [isChatOpen, setIsChatOpen] = useState(false);
 
