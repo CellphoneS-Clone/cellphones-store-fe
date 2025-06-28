@@ -2,6 +2,8 @@
 
 import React, { JSX, useState } from 'react';
 import { ChevronLeft, Trash2, Plus, Minus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface Product {
   id: string;
@@ -27,13 +29,14 @@ export default function CartPage(): JSX.Element {
 
   return (
 
-<div className = 'max-w-[800px] mx-auto relative'>
+<div className = 'md:max-w-[600px] mx-auto relative bg-gray-100'>
 
     <div className="  min-h-screen ">
       {/* Header */}
       <div className="  sticky top-0 z-10 w-full ">
         <div className="flex px-4 py-3 ">
-        <ChevronLeft className="w-6 h-6 text-gray-600" />
+          <Link href={'/'}> <ChevronLeft className="w-6 h-6 text-gray-600" /></Link>
+       
         <div className='mx-auto'><h1 className=" text-center ml-3 text-lg font-semibold text-gray-900">Giỏ hàng của bạn</h1></div>
         </div>
       </div>
@@ -42,9 +45,9 @@ export default function CartPage(): JSX.Element {
       <div className="px-4 py-4">
         {/* Cart Tab */}
         <div className="flex mb-4">
-          <button className="bg-red-600 text-white px-4 py-2 rounded-lg text-base font-semibold mr-2">
+          <Button className="bg-red-600  text-white px-4 py-2 rounded-lg text-base font-semibold mr-2">
             Giỏ hàng
-          </button>
+          </Button>
         </div>
 
         {/* Select All */}
@@ -62,8 +65,8 @@ export default function CartPage(): JSX.Element {
         </div>
 
         {/* Product Item */}
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-          <div className="flex items-start">
+        <div className="bg-white rounded-lg border border-gray-300 p-4 mb-4">
+          <div className="md:flex items-start">
             {/* Checkbox */}
             <input
               type="checkbox"
@@ -85,41 +88,41 @@ export default function CartPage(): JSX.Element {
             </div>
 
             {/* Product Details */}
-            <div className="flex-1 ml-3">
+            <div className="md:flex-1 ml-3">
               <h3 className="text-gray-900 text-base font-semibold mb-1">
                 Quạt đứng Aqua AQS-FED3501R(W)-VN-Trắng
               </h3>
               
-              <div className="flex items-center justify-between">
+              <div className="md:flex items-center justify-between">
                 <div>
                   <span className="text-red-600 text-base font-semibold">890.000đ</span>
                   <span className="text-gray-400 line-through ml-2 text-sm font-semibold">1.490.000đ</span>
                 </div>
                 
                 {/* Delete Button */}
-                <button className="p-1">
+                <Button className="p-1 bg-white">
                   <Trash2 className="w-5 h-5 text-gray-400" />
-                </button>
+                </Button>
               </div>
 
               {/* Quantity Controls */}
               <div className="flex items-center justify-end mt-2">
                 <div className="flex items-center border border-gray-300 rounded">
-                  <button
+                  <Button
                     onClick={() => handleQuantityChange(-1)}
-                    className="p-1 hover:bg-gray-100"
+                    className="p-1 hover:bg-gray-100 bg-white"
                   >
                     <Minus className="w-4 h-4 text-gray-600" />
-                  </button>
+                  </Button>
                   <span className="px-3 py-1 text-gray-900 min-w-[40px] text-center">
                     {quantity}
                   </span>
-                  <button
+                  <Button
                     onClick={() => handleQuantityChange(1)}
-                    className="p-1 hover:bg-gray-100"
+                    className="p-1 hover:bg-gray-100 bg-white"
                   >
                     <Plus className="w-4 h-4 text-gray-600" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -142,9 +145,10 @@ export default function CartPage(): JSX.Element {
           </div>
         </div>
         
-        <button className=" bg-gray-400 text-white py-3 px-3 rounded-lg font-medium">
-          Mua ngay
-        </button>
+        <Button className=" bg-gray-400 text-white py-3 px-3 rounded-lg font-medium">
+          <Link href={'/cart/payment-info'} >Mua ngay </Link>
+          
+        </Button>
       </div>
 
       {/* Bottom padding to account for fixed footer */}

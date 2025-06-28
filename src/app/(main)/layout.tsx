@@ -15,9 +15,9 @@ export default function MainLayout({
     const [isChatOpen, setIsChatOpen] = useState(false);
 
     return (
-        <div className="min-h-screen m-[64px] flex flex-col">
+        <div className="min-h-screen  flex flex-col">
             <Header />
-            <main className="flex-grow">
+            <main className="flex-grow bg-gray-100 mt-[64px]">
                 {children}
             </main>
             {!isChatOpen && (
