@@ -26,7 +26,7 @@ function ProductCard() {
     }
 
     return (
-        <Card className="w-[224.8px] mr-2.5 overflow-hidden">
+        <Card className="w-[225px] overflow-hidden">
             {/* Phần hình ảnh */}
             <CardHeader className="p-0 relative">
                 <Link href={`/products/${id}`} className="block">

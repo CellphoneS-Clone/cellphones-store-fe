@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-interface CategoryItem {
+export interface CategoryItem {
   title: string;
   imageUrl: string;
   link: string;
@@ -12,6 +12,7 @@ interface CategoryItem {
 interface CategoryCardProps {
   category: CategoryItem;
   index: number;
+  hideHeader?: boolean;
 }
 
 export function CategoryCard({ category, index }: CategoryCardProps) {

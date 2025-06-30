@@ -52,7 +52,7 @@ export default function QASection() {
       <h1 className="text-xl font-bold">Hỏi và đáp</h1>
       <div className="flex flex-col md:flex-row items-start md:items-center mt-4 bg-white rounded-lg p-4 gap-4">
         <Image
-          src="/images/cellphones/hình_ảnh_biểu_tượng_cellphoneS.gif"
+          src="/images/cellphones/hình ảnh biểu tượng cellphoneS.gif"
           alt="Bot"
           width={96}
           height={96}

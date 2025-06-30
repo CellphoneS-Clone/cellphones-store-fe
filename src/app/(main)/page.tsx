@@ -70,9 +70,17 @@ const demoItem: CategoryItem = {
   link: '#',
 };
 
+const createSlug = (title: string) => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-') // Thay thế ký tự không phải chữ/số bằng dấu gạch ngang
+    .replace(/(^-|-$)/g, ''); // Xóa dấu gạch ngang ở đầu/cuối
+};
+
 const categories: CategoryItem[] = Array.from({ length: 14 }, (_, index) => ({
-  ...demoItem,
-  title: `${demoItem.title} ${index + 1}`,
+  title: `Phụ kiện Apple ${index + 1}`,
+  imageUrl: '/images/ipad_pro.png',
+  link: `/categories/${createSlug(`Phu kien Apple ${index + 1}`)}`,
 }));
 
 const paymentBanners = [
@@ -97,7 +105,7 @@ export default function HomePage() {
         {/* Top Home Section */}
         <div className="flex flex-row flex-nowrap gap-4 h-full">
           <MenuBanner
-            // isOverlay={true}
+          // isOverlay={true}
           />
           <SlidingBanner
             slides={[

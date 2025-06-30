@@ -60,7 +60,6 @@ export function ProductListSection({ products, relatedTags, formatPrice }: Produ
             {products.map((product) => (
               <ProductCard
                 key={product.id}
-
               />
             ))}
           </div>

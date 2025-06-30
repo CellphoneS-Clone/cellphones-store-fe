@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -12,19 +12,25 @@ interface CategoryItem {
 
 interface CategorySectionProps {
   categories: CategoryItem[];
+  hideHeader?: boolean; // Prop để ẩn/hiện tiêu đề, mặc định là false
 }
 
-export function CategorySection({ categories }: CategorySectionProps) {
+export function CategorySection({ categories, hideHeader = false }: CategorySectionProps) {
   return (
     <div className="mt-5">
-      <div className="flex justify-between items-center mb-2.5">
-        <h2 className="text-[22px] font-semibold text-[#444]">
-          <Link href="#">PHỤ KIỆN</Link>
-        </h2>
-        <Link href="#" className="text-[13px] font-normal text-[#111] hover:text-[#d70018] hover:underline hover:font-bold transition-all">
-          Xem tất cả
-        </Link>
-      </div>
+      {!hideHeader && (
+        <div className="flex justify-between items-center mb-2.5">
+          <h2 className="text-[22px] font-semibold text-[#444]">
+            <Link href="#">PHỤ KIỆN</Link>
+          </h2>
+          <Link
+            href="#"
+            className="text-[13px] font-normal text-[#111] hover:text-[#d70018] hover:underline hover:font-bold transition-all"
+          >
+            Xem tất cả
+          </Link>
+        </div>
+      )}
       <div className="flex flex-wrap gap-2.5">
         {categories.map((item, index) => (
           <CategoryCard key={index} category={item} index={index} />
