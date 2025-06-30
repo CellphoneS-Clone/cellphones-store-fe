@@ -30,7 +30,6 @@ export default function PaymentPage() {
       {/* Agreement Checkbox */}
       <AgreementCheckbox/>
 
-      <div className="h-24"></div>
       {/* Bottom Summary */}
       <BottomSummary/>
     </div>
