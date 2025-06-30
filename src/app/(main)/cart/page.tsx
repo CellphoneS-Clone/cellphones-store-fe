@@ -137,18 +137,18 @@ export default function CartPage(): JSX.Element {
 
 
      {/* Bottom Summary */}
-     <div className="absolute bottom-0 left-0 right-0 flex justify-between bg-white shadow-2xl p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center">
-            <span className="text-gray-700">Tạm tính: </span>
-            <span className="text-red-600 font-bold ml-1">0đ</span>
+     <div className="fixed bottom-0 w-full flex justify-start z-50">
+        <div className="w-full md:max-w-[600px] flex justify-between bg-white shadow-2xl p-4 rounded-t-lg">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center">
+              <span className="text-gray-700">Tạm tính: </span>
+              <span className="text-red-600 font-bold ml-1">0đ</span>
+            </div>
           </div>
+          <Button className=" bg-gray-400 text-white py-3 px-3 rounded-lg font-medium">
+            <Link href={'/cart/payment-info'} >Mua ngay </Link>
+          </Button>
         </div>
-        
-        <Button className=" bg-gray-400 text-white py-3 px-3 rounded-lg font-medium">
-          <Link href={'/cart/payment-info'} >Mua ngay </Link>
-          
-        </Button>
       </div>
 
       {/* Bottom padding to account for fixed footer */}
