@@ -8,7 +8,7 @@ import OrderSummary from '@/components/cart/information/payment/OrderSummary';
 import PaymentMethod from '@/components/cart/information/payment/PaymentMethod';
 import CustomerInformation from '@/components/cart/information/payment/CustomerInformation';
 import AgreementCheckbox from '@/components/cart/information/payment/AgreementCheckbox';
-import BottomSummary from '@/components/cart/information/payment/BottomSummary';
+import BottomSummary from '@/components/cart/information/deliveryInformation/BottomSummary';
 
 export default function PaymentPage() {
  
@@ -31,7 +31,7 @@ export default function PaymentPage() {
       <AgreementCheckbox/>
 
       {/* Bottom Summary */}
-      <BottomSummary/>
+      <BottomSummary subtotal={0} buttonText="Thanh toán" onButtonClick={() => {}} />
     </div>
   );
 }

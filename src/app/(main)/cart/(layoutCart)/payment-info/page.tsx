@@ -43,7 +43,7 @@ export default function PaymentInfoPage(): JSX.Element {
                     <div className="h-24"></div>
 
                     {/* Bottom Summary */}
-                <BottomSummary/>
+                <BottomSummary subtotal={0} buttonText="Tiếp tục" onButtonClick={() => {}} />
     </div>
   )
   
