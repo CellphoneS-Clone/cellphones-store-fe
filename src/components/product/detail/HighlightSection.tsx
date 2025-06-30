@@ -9,9 +9,9 @@ type HighlightSectionProps = {
 export default function HighlightSection({ }: HighlightSectionProps) {
   return (
     <div className="mt-4">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="flex sm:flex-row">
-          <div className="w-full h-full sm:w-1/1 pr-4 bg-gray-100 rounded-2xl px-4 py-4">
+      <div className="max-w-[1200px] mx-auto ">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="w-full h-full sm:w-1/1 bg-gray-100 rounded-2xl p-4">
             <h1 className="text-2xl font-bold mb-2">Đặc điểm nổi bật</h1>
             <div className="bg-white rounded-lg p-2 inline-block max-w-full mt-2">
               <p className="">
@@ -23,14 +23,14 @@ export default function HighlightSection({ }: HighlightSectionProps) {
               <p>iPad A16 11 inch và iPad Air 11 inch M3 được ra mắt cùng năm vậy hai thế hệ iPad này có điểm gì giống và khác, hãy cùng so sánh chi tiết:</p>
             </div>
           </div>
-          <div className="w-full h-[405px] sm:w-1/2 ml-5 bg-gray-100 rounded-lg px-4 py-4">
+          <div className="w-full h-[350px] sm:w-1/2 bg-gray-100 rounded-lg px-4 py-4">
             <div className="flex justify-between">
               <h1 className="text-xl font-bold">Tin tức sản phẩm</h1>
               <Link href="Xem tất cả" className="text-blue-600 text-sm flex items-center hover:underline">
                 xem tất cả <ChevronRight />
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-1 pt-4">
+            <div className="grid grid-cols-1 py-4 gap-y-4">
               <NewsItem />
               <NewsItem />
               <NewsItem />
