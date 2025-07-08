@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import Input from '../../input/Input';
 import Select from '../../../common/Select';
 import { getProvinces, getDistrictsByProvinceCode } from '@/services/locationService';
 import { Province, District } from '@/types/location';
+import { usePaymentForm } from '@/context/PaymentFormContext';
 
 interface SelectOption {
   value: number | string;
@@ -11,10 +11,9 @@ interface SelectOption {
 }
 
 const DeliveryToYourDoor = () => {
+    const { formData, updateDeliveryInfo } = usePaymentForm();
     const [provinces, setProvinces] = useState<Province[]>([]);
     const [districts, setDistricts] = useState<District[]>([]);
-    const [selectedProvince, setSelectedProvince] = useState<SelectOption | null>(null);
-    const [selectedDistrict, setSelectedDistrict] = useState<SelectOption | null>(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -35,10 +34,10 @@ const DeliveryToYourDoor = () => {
 
     useEffect(() => {
         const fetchDistricts = async () => {
-            if (selectedProvince) {
+            if (formData.delivery.province) {
                 setLoading(true);
                 try {
-                    const data = await getDistrictsByProvinceCode(Number(selectedProvince.value));
+                    const data = await getDistrictsByProvinceCode(Number(formData.delivery.province.value));
                     setDistricts(data);
                 } catch (error) {
                     console.error('Error fetching districts:', error);
@@ -47,20 +46,37 @@ const DeliveryToYourDoor = () => {
                 }
             } else {
                 setDistricts([]);
-                setSelectedDistrict(null);
             }
         };
 
         fetchDistricts();
-    }, [selectedProvince]);
+    }, [formData.delivery.province]);
+
+    const handleReceiverNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updateDeliveryInfo({ receiverName: e.target.value });
+    };
 
     const handleProvinceChange = (option: SelectOption) => {
-        setSelectedProvince(option);
-        setSelectedDistrict(null);
+        updateDeliveryInfo({ 
+            province: option,
+            district: null // Reset district when province changes
+        });
     };
 
     const handleDistrictChange = (option: SelectOption) => {
-        setSelectedDistrict(option);
+        updateDeliveryInfo({ district: option });
+    };
+
+    const handleWardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updateDeliveryInfo({ ward: e.target.value });
+    };
+
+    const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updateDeliveryInfo({ address: e.target.value });
+    };
+
+    const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updateDeliveryInfo({ note: e.target.value });
     };
 
     const provinceOptions = provinces.map(province => ({
@@ -75,34 +91,62 @@ const DeliveryToYourDoor = () => {
 
     return (
         <div className='grid grid-cols-2 gap-8 mb-4'>
-                            <Input label='Tên người nhận' />
-                            <Input label='Giao hàng tận nơi' />
-            
-            
-            
+            <Input 
+                label='Tên người nhận *' 
+                value={formData.delivery.receiverName}
+                onChange={handleReceiverNameChange}
+                required
+                // placeholder="Nhập tên người nhận"
+            />
+            <Input 
+                label='Số điện thoại *' 
+                value={formData.customer.phone}
+                disabled
+                // placeholder="Số điện thoại"
+            />
             
             <Select
-                label="TỈNH/THÀNH PHỐ"
-                placeholder="Chọn tỉnh/thành phố"
+                label="TỈNH/THÀNH PHỐ *"
+                // placeholder="Chọn tỉnh/thành phố"
                 options={provinceOptions}
-                value={selectedProvince}
+                value={formData.delivery.province}
                 onChange={handleProvinceChange}
                 disabled={loading}
+                // required
             />
             
             <Select
-                label="QUẬN/HUYỆN"
-                placeholder="Chọn quận/huyện"
+                label="QUẬN/HUYỆN *"
+                // placeholder="Chọn quận/huyện"
                 options={districtOptions}
-                value={selectedDistrict}
+                value={formData.delivery.district}
                 onChange={handleDistrictChange}
-                disabled={loading || !selectedProvince}
+                disabled={loading || !formData.delivery.province}
+                // required
             />
-            <Input label='PHƯỜNG/XÃ' />
-            <Input label='Số nhà, tên đường' />
+
+            <Input 
+                label='PHƯỜNG/XÃ *' 
+                value={formData.delivery.ward}
+                onChange={handleWardChange}
+                required
+                // placeholder="Nhập phường/xã"
+            />
+            <Input 
+                label='Số nhà, tên đường *' 
+                value={formData.delivery.address}
+                onChange={handleAddressChange}
+                required
+                // placeholder="Nhập địa chỉ cụ thể"
+            />
             
             <div className='col-span-2'>
-                <Input label='Ghi chú khác nếu có' />
+                <Input 
+                    label='Ghi chú khác nếu có' 
+                    value={formData.delivery.note}
+                    onChange={handleNoteChange}
+                    // placeholder="Ghi chú thêm về địa chỉ giao hàng"
+                />
             </div>
         </div>
     );

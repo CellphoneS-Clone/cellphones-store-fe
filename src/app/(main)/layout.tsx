@@ -8,6 +8,8 @@ import ChatWidget from '@/components/chat/ChatWidget';
 import Link from 'next/link';
 import { MessageCircle } from 'lucide-react';
 import { useMenu } from '@/context/MenuContext';
+import { CartProvider } from '@/context/CartContext';
+import { PaymentFormProvider } from '@/context/PaymentFormContext';
 
 export default function MainLayout({
   children,
@@ -17,23 +19,27 @@ export default function MainLayout({
     const [isChatOpen, setIsChatOpen] = useState(false);
 
     return (
-        <div className="min-h-screen  flex flex-col">
-            <Header />
-            <main className="flex-grow bg-gray-100 mt-[64px]">
-                {children}
-            </main>
-            {!isChatOpen && (
-                <button
-                    onClick={() => setIsChatOpen(true)}
-                    className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
-                >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Liên hệ</span>
-                </button>
-            )}
-            {/* Chat Widget */}
-            {isChatOpen && <ChatWidget onClose={() => setIsChatOpen(false)} />}
-            <Footer />
-        </div>
+        <CartProvider>
+            <PaymentFormProvider>
+                <div className="min-h-screen flex flex-col">
+                    <Header />
+                    <main className="flex-grow bg-gray-100 mt-[64px]">
+                        {children}
+                    </main>
+                    {!isChatOpen && (
+                        <button
+                            onClick={() => setIsChatOpen(true)}
+                            className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
+                        >
+                            <MessageCircle className="w-5 h-5" />
+                            <span>Liên hệ</span>
+                        </button>
+                    )}
+                    {/* Chat Widget */}
+                    {isChatOpen && <ChatWidget onClose={() => setIsChatOpen(false)} />}
+                    <Footer />
+                </div>
+            </PaymentFormProvider>
+        </CartProvider>
     )
-} 
+}
