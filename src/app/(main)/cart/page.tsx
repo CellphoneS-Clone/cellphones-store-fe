@@ -1,157 +1,147 @@
 'use client'
 
 import React, { JSX, useState } from 'react';
-import { ChevronLeft, Trash2, Plus, Minus } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice: number;
-  image: string;
-}
+import ProductItem from '@/components/cart/ProductItem';
+import { useCart } from '@/context/CartContext';
+import { useRouter } from 'next/navigation';
 
 export default function CartPage(): JSX.Element {
-  const [quantity, setQuantity] = useState<number>(1);
-  const [isSelectAll, setIsSelectAll] = useState<boolean>(false);
-  const [isItemSelected, setIsItemSelected] = useState<boolean>(false);
+  const {
+    products,
+    selectedProducts,
+    totalAmount,
+    updateProductQuantity,
+    updateProductSelection,
+    removeProduct,
+    selectAllProducts,
+    formatPrice,
+  } = useCart();
 
-  const handleQuantityChange = (change: number): void => {
-    const newQuantity = Math.max(1, quantity + change);
-    setQuantity(newQuantity);
+  const router = useRouter();
+  const [isSelectAll, setIsSelectAll] = useState<boolean>(false);
+
+  const handleSelectAll = (checked: boolean) => {
+    setIsSelectAll(checked);
+    selectAllProducts(checked);
   };
 
-  const formatPrice = (price: number): string => {
-    return price.toLocaleString('vi-VN') + 'đ';
+  const handleProductSelection = (productId: string, checked: boolean) => {
+    updateProductSelection(productId, checked);
+    
+    // Update select all checkbox
+    const allSelected = products.every(product => 
+      product.id === productId ? checked : product.isSelected
+    );
+    setIsSelectAll(allSelected);
+  };
+
+  const handleQuantityChange = (productId: string, change: number) => {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      updateProductQuantity(productId, product.quantity + change);
+    }
+  };
+
+  const handleDeleteProduct = (productId: string) => {
+    removeProduct(productId);
+  };
+
+  // Check if any product is selected
+  const hasSelectedProducts = selectedProducts.length > 0;
+
+  const handleProceedToPayment = () => {
+    if (hasSelectedProducts) {
+      router.push('/cart/payment-info');
+    }
   };
 
   return (
-
-<div className = 'md:max-w-[600px] mx-auto relative bg-gray-100'>
-
-    <div className="  min-h-screen ">
-      {/* Header */}
-      <div className="  sticky top-0 z-10 w-full ">
-        <div className="flex px-4 py-3 ">
-          <Link href={'/'}> <ChevronLeft className="w-6 h-6 text-gray-600" /></Link>
-       
-        <div className='mx-auto'><h1 className=" text-center ml-3 text-lg font-semibold text-gray-900">Giỏ hàng của bạn</h1></div>
-        </div>
-      </div>
-
-      {/* Cart Content */}
-      <div className="px-4 py-4">
-        {/* Cart Tab */}
-        <div className="flex mb-4">
-          <Button className="bg-red-600  text-white px-4 py-2 rounded-lg text-base font-semibold mr-2">
-            Giỏ hàng
-          </Button>
-        </div>
-
-        {/* Select All */}
-        <div className="flex items-center mb-4">
-          <input
-            type="checkbox"
-            id="selectAll"
-            checked={isSelectAll}
-            onChange={(e) => setIsSelectAll(e.target.checked)}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <label htmlFor="selectAll" className="ml-2 text-gray-700 text-base font-medium">
-            Chọn tất cả
-          </label>
-        </div>
-
-        {/* Product Item */}
-        <div className="bg-white rounded-lg border border-gray-300 p-4 mb-4">
-          <div className="md:flex items-start">
-            {/* Checkbox */}
-            <input
-              type="checkbox"
-              checked={isItemSelected}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsItemSelected(e.target.checked)}
-              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500 mt-1"
-            />
-            
-            {/* Product Image */}
-            <div className="ml-3 w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
-              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
-                <div className="w-12 h-12 bg-gray-200 rounded-full relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                  </div>
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 h-6 bg-gray-400 rounded-t"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Product Details */}
-            <div className="md:flex-1 ml-3">
-              <h3 className="text-gray-900 text-base font-semibold mb-1">
-                Quạt đứng Aqua AQS-FED3501R(W)-VN-Trắng
-              </h3>
-              
-              <div className="md:flex items-center justify-between">
-                <div>
-                  <span className="text-red-600 text-base font-semibold">890.000đ</span>
-                  <span className="text-gray-400 line-through ml-2 text-sm font-semibold">1.490.000đ</span>
-                </div>
-                
-                {/* Delete Button */}
-                <Button className="p-1 bg-white">
-                  <Trash2 className="w-5 h-5 text-gray-400" />
-                </Button>
-              </div>
-
-              {/* Quantity Controls */}
-              <div className="flex items-center justify-end mt-2">
-                <div className="flex items-center border border-gray-300 rounded">
-                  <Button
-                    onClick={() => handleQuantityChange(-1)}
-                    className="p-1 hover:bg-gray-100 bg-white"
-                  >
-                    <Minus className="w-4 h-4 text-gray-600" />
-                  </Button>
-                  <span className="px-3 py-1 text-gray-900 min-w-[40px] text-center">
-                    {quantity}
-                  </span>
-                  <Button
-                    onClick={() => handleQuantityChange(1)}
-                    className="p-1 hover:bg-gray-100 bg-white"
-                  >
-                    <Plus className="w-4 h-4 text-gray-600" />
-                  </Button>
-                </div>
-              </div>
+    <div className='md:max-w-[600px] mx-auto relative bg-gray-100'>
+      <div className="min-h-screen">
+        {/* Header */}
+        <div className="sticky top-0 z-10 w-full">
+          <div className="flex px-4 py-3">
+            <Link href={'/'}> 
+              <ChevronLeft className="w-6 h-6 text-gray-600" />
+            </Link>
+            <div className='mx-auto'>
+              <h1 className="text-center ml-3 text-lg font-semibold text-gray-900">
+                Giỏ hàng của bạn
+              </h1>
             </div>
           </div>
         </div>
-      
+
+        {/* Cart Content */}
+        <div className="px-4 py-4">
+          {/* Cart Tab */}
+          <div className="flex mb-4">
+            <Button className="bg-red-600 text-white px-4 py-2 rounded-lg text-base font-semibold mr-2">
+              Giỏ hàng
+            </Button>
+          </div>
+
+          {/* Select All */}
+          <div className="flex items-center mb-4">
+            <Checkbox
+              id="selectAll"
+              checked={isSelectAll}
+              onCheckedChange={handleSelectAll}
+            />
+            <label htmlFor="selectAll" className="ml-2 text-gray-700 text-base font-medium">
+              Chọn tất cả
+            </label>
+          </div>
+
+          {/* Product Items */}
+          {products.map((product) => (
+            <ProductItem
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              price={product.price}
+              originalPrice={product.originalPrice}
+              image={product.image}
+              quantity={product.quantity}
+              isSelected={product.isSelected}
+              onSelectionChange={(checked) => handleProductSelection(product.id, checked)}
+              onQuantityChange={(change) => handleQuantityChange(product.id, change)}
+              onDelete={() => handleDeleteProduct(product.id)}
+            />
+          ))}
+        </div>
+        
+        <div className="h-24"></div>
       </div>
 
-     
-      <div className="h-24"></div>
-    </div>
-
-
-     {/* Bottom Summary */}
-     <div className="fixed bottom-0 w-full flex justify-start z-50">
+      {/* Bottom Summary */}
+      <div className="fixed bottom-0 w-full flex justify-start z-50">
         <div className="w-full md:max-w-[600px] flex justify-between bg-white shadow-2xl p-4 rounded-t-lg">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center">
               <span className="text-gray-700">Tạm tính: </span>
-              <span className="text-red-600 font-bold ml-1">0đ</span>
+              <span className="text-red-600 font-bold ml-1">
+                {formatPrice(totalAmount)}
+              </span>
             </div>
           </div>
-          <Button className=" bg-gray-400 text-white py-3 px-3 rounded-lg font-medium">
-            <Link href={'/cart/payment-info'} >Mua ngay </Link>
+          <Button 
+            className={`py-3 px-3 rounded-lg font-medium text-white transition-all duration-300 ease-in-out ${
+              hasSelectedProducts 
+                ? 'bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105' 
+                : 'bg-gray-400 hover:bg-gray-500'
+            }`}
+            onClick={handleProceedToPayment}
+            disabled={!hasSelectedProducts}
+          >
+            Mua ngay
           </Button>
         </div>
       </div>
-
-      {/* Bottom padding to account for fixed footer */}
     </div>
   );
 }
