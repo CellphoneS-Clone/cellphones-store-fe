@@ -139,13 +139,13 @@ export default function CategoryDetail() {
                                     <div className="mb-2">
                                         <h4 className="font-semibold text-gray-700">Tương thích</h4>
                                         <Button variant="ghost" size="sm" className="w-full text-left">
-                                            iPadOS
+                                            Điện thoại
                                         </Button>
                                         <Button variant="ghost" size="sm" className="w-full text-left">
-                                            macOS
+                                            Tablet
                                         </Button>
                                         <Button variant="ghost" size="sm" className="w-full text-left">
-                                            iOS
+                                            Laptop/ Macbook
                                         </Button>
                                     </div>
                                     <div className="mb-2">
