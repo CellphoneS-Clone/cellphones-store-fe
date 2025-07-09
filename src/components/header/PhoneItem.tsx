@@ -15,6 +15,6 @@ export function PhoneItem({ icon, number }: PhoneItemProps) {
         <p className="text-xs">Gọi mua hàng</p>
         <p className="font-medium text-[13px]">{number}</p>
       </div>
-    </div>
+    </div> 
   );
 }
