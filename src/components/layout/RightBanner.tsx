@@ -21,7 +21,7 @@ export function RightBanner({ banners }: RightBannerProps) {
         {banners.map((banner, index) => (
           <Link
             key={index}
-            href="/menusilde"
+            href="/special-event"
             className="right-banner__item rounded-lg shadow-[0_1px_2px_0_rgba(60,64,67,0.1),0_2px_6px_2px_rgba(60,64,67,0.15)] mb-[15.5px] min-h-[calc(33.33333%-10px)] overflow-hidden flex"
           >
             <Image
