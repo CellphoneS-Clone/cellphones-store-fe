@@ -1,4 +1,5 @@
 // layout.tsx (RootLayout)
+import { MenuProvider } from "@/context/MenuContext";
 import "./globals.css";
 import { ThemeProvider } from "@/components/admin/theme-provider";
 
@@ -9,14 +10,17 @@ export default function RootLayout({
     <html>
       <body
         className={`antialiased bg-gray-100`}
+        suppressHydrationWarning
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
+          enableSystem  
           disableTransitionOnChange
         >
-          {children}
+          <MenuProvider>
+            {children}
+          </MenuProvider>
         </ThemeProvider>
       </body>
     </html>

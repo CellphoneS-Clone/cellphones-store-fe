@@ -46,6 +46,22 @@ export default function ProductDetail({ params }: Props) {
   const handleVersionClick = (version: string) => console.log(`Version ${version} clicked`);
   const handleAddToCart = (accessory: string) => console.log(`Added ${accessory} to cart`);
 
+  const ProductDetail = {
+    images: [
+      { src: '/images/top_banner.png', alt: 'Hình phụ 1' },
+      { src: '/images/top_banner.png', alt: 'Hình phụ 2' },
+      { src: '/images/top_banner.png', alt: 'Hình phụ 3' },
+      { src: '/images/top_banner.png', alt: 'Hình phụ 4' },],
+    colors: [
+      { name: 'Titan Đen', price: '36.590.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Đen' },
+      { name: 'Titan Tự nhiên', price: '36.890.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Tự nhiên' },
+      { name: 'Titan Trắng', price: '36.790.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Trắng' },
+      { name: 'Titan Sa Mạc', price: '36.490.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Sa Mạc' },
+    ],
+
+    dataRange: ['1TB', '512GB', '256GB'],
+
+  }
   const images = [
     { src: '/images/top_banner.png', alt: 'Hình phụ 1' },
     { src: '/images/top_banner.png', alt: 'Hình phụ 2' },
@@ -112,8 +128,8 @@ export default function ProductDetail({ params }: Props) {
       <ProductBreadcrumb slug={slug} />
       <div className="pt-30">
         <div className="max-w-[1200px] mx-auto px-2">
-          <div className="flex flex-col sm:flex-row">
-            <div className="w-full sm:w-1/2 pr-4">
+          <div className="flex flex-col lg:flex-row">
+            <div className="w-full lg:w-1/2 pr-0 lg:pr-4">
               <h1 className="text-2xl font-bold mb-2">Chi tiết sản phẩm: {slug}</h1>
               <div className="flex items-center mb-4">
                 <Star className="text-yellow-500 text-xl" />
@@ -137,7 +153,8 @@ export default function ProductDetail({ params }: Props) {
               <TechnicalSpecs specs={technicalSpecs} />
               <FAQSection features={features} />
             </div>
-            <div className="w-full sm:w-1/2 pl-4">
+
+            <div className="w-full lg:w-1/2 pl-0 lg:pl-4">
               <ProductPrice price={priceData.price} originalPrice={priceData.originalPrice} />
               <ProductVersions versions={versions} onVersionClick={handleVersionClick} />
               <ProductColors colors={colors} onColorClick={handleColorClick} />
@@ -152,12 +169,14 @@ export default function ProductDetail({ params }: Props) {
               <WarrantyOptions />
             </div>
           </div>
+
           <RecommendationSection />
           <HighlightSection slug={slug} />
           <ReviewSection slug={slug} />
           <QASection />
         </div>
       </div>
+
     </>
   );
 }

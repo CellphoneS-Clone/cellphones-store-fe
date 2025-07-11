@@ -8,7 +8,7 @@ export default function ProductCommitmentSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col p-4 bg-gray-50 rounded-2xl space-y-2">
           <div
-            className="w-10 h-10 text-white font-bold text-sm rounded-full px-2 text-center hover:brightness-110 transition flex-col items-center justify-center leading-tight"
+            className="w-10 h-10 text-white font-bold text-sm rounded-full px-2 text-center hover:brightness-110 transition flex flex-col items-center justify-center leading-tight"
             style={{ background: 'linear-gradient(0deg, #d70018, #e45464)' }}
           >
             <SmartphoneCharging />
@@ -17,7 +17,7 @@ export default function ProductCommitmentSection() {
         </div>
         <div className="flex flex-col p-4 bg-gray-50 rounded-2xl space-y-2">
           <div
-            className="w-10 h-10 text-white font-bold text-sm rounded-full px-2 text-center hover:brightness-110 transition flex-col items-center justify-center leading-tight"
+            className="w-10 h-10 text-white font-bold text-sm rounded-full px-2 text-center hover:brightness-110 transition flex flex-col items-center justify-center leading-tight"
             style={{ background: 'linear-gradient(0deg, #d70018, #e45464)' }}
           >
             <ShieldX />
@@ -29,7 +29,7 @@ export default function ProductCommitmentSection() {
         </div>
         <div className="flex flex-col p-4 bg-gray-50 rounded-2xl space-y-2">
           <div
-            className="w-10 h-10 text-white font-bold text-sm rounded-full px-2 text-center hover:brightness-110 transition flex-col items-center justify-center leading-tight"
+            className="w-10 h-10 text-white font-bold text-sm rounded-full px-2 text-center hover:brightness-110 transition flex flex-col items-center justify-center leading-tight"
             style={{ background: 'linear-gradient(0deg, #d70018, #e45464)' }}
           >
             <Cpu />
@@ -43,7 +43,7 @@ export default function ProductCommitmentSection() {
         </div>
         <div className="flex flex-col p-4 bg-gray-50 rounded-2xl space-y-2">
           <div
-            className="w-10 h-10 text-white font-bold text-sm rounded-full flex-col items-center justify-center"
+            className="w-10 h-10 text-white font-bold text-sm rounded-full flex flex-col items-center justify-center"
             style={{ background: 'linear-gradient(0deg, #d70018, #e45464)' }}
           >
             <Tickets />

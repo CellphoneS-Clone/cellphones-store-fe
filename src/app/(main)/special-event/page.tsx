@@ -49,7 +49,7 @@ export default function MenuSlidePage() {
     };
 
     return (
-        <div className="mt-27">
+        <div className="mt-12">
             {/* Menu Slide Section */}
             <div className="fixed top-[64px] left-0 w-full bg-[#c00c0c] text-white px-4 sm:px-6 lg:px-20 py-2 flex justify-around items-center z-40">
                 <Button

@@ -85,10 +85,23 @@ export default function CategoryDetail() {
     return (
         <div>
             <ProductBreadcrumb slug={slug} />
-            <div className="max-w-[1200px] mt-30 mx-auto px-4">
-                <span className="text-gray-600 text-lg font-medium">Chọn theo sản phẩm</span>
-                <CategorySection categories={categories} hideHeader={true} />
+            {/** Responsive Category Section */}
+            <div className="max-w-[1200px] mx-auto px-4 mt-8">
+                <span className="text-gray-600 text-lg font-medium block mb-4">Chọn theo sản phẩm</span>
+
+                {/* Desktop & iPad ngang */}
+                <div className="hidden md:block">
+                    <CategorySection categories={categories} hideHeader />
+                </div>
+
+                {/* Mobile & iPad dọc */}
+                <div className="md:hidden overflow-x-auto scrollbar-thin -mx-4 px-4">
+                    <div className="flex gap-3 min-w-max">
+                        <CategorySection categories={categories} hideHeader />
+                    </div>
+                </div>
             </div>
+
             <div className="max-w-[1200px] mx-auto px-4">
                 {/* Phần lọc với dropdown */}
                 <div className="mt-6">
@@ -184,7 +197,7 @@ export default function CategoryDetail() {
                             >
                                 <CarTaxiFront /> Sẵn sàng
                             </Button>
-                            
+
                         </div>
                         <div className="relative">
                             <Button
@@ -266,7 +279,7 @@ export default function CategoryDetail() {
                                 className={cn('')}
                             >
                                 Tương thích <ChevronDown className='mt-1' />
-                            </Button> 
+                            </Button>
                             {isDropdownOpen.compatibility && (
                                 <div className="absolute z-10 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
                                     <Button variant="ghost" size="sm" className="w-full text-left">
@@ -333,7 +346,7 @@ export default function CategoryDetail() {
                     <div className="flex flex-wrap gap-2 mt-2">
                         <Button variant="outline" size="sm"> <ArrowDownNarrowWide /> Giá Cao - Thấp</Button>
                         <Button variant="outline" size="sm" className={cn('')}>
-                            <ArrowDownWideNarrow /> Giá Thấp - Cao 
+                            <ArrowDownWideNarrow /> Giá Thấp - Cao
                         </Button>
                         <Button variant="outline" size="sm" className={cn('')}>
                             <Percent /> Khuyến Mãi Hot
@@ -345,7 +358,11 @@ export default function CategoryDetail() {
                 </div>
 
                 {/* Hiển thị danh sách sản phẩm bằng ProductCard */}
-                <div className="flex flex-wrap gap-2.5 mt-6">
+                <div className="flex flex-wrap gap-8 sm:gap-2.5 mt-6 px-2 sm:px-0 transition-all duration-300"
+                    style={{
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                    }}
+                >
                     {Array.from({ length: productCount }).map((_, index) => (
                         <ProductCard key={index} />
                     ))}
