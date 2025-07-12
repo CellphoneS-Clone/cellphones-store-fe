@@ -1,7 +1,7 @@
 // layout.tsx (RootLayout)
 import { MenuProvider } from "@/context/MenuContext";
 import "./globals.css";
-import { ThemeProvider } from "@/components/admin/theme-provider";
+import { ThemeProvider } from "@/components/admin/ThemeProvider";
 
 export default function RootLayout({
   children,
