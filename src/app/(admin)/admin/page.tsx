@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -50,6 +50,15 @@ import {
   BarChart,
   DonutChart,
 } from "@tremor/react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function Dashboard() {
   // Mock data for demonstration
@@ -187,6 +196,14 @@ export default function Dashboard() {
       image: "https://via.placeholder.com/60x90",
       category: "Phụ kiện",
     },
+    {
+      title: "AirPods Pro 2",
+      rating: 4.4,
+      sold: 98,
+      revenue: "₫15,680,000",
+      image: "https://via.placeholder.com/60x90",
+      category: "Phụ kiện",
+    },
   ];
 
   const recentOrders = [
@@ -233,6 +250,50 @@ export default function Dashboard() {
       quantity: 1,
       status: "cancelled",
       amount: "₫22,000,000",
+    },
+    {
+      id: "#DH005",
+      customer: "Hoàng Văn E",
+      email: "hoangvane@email.com",
+      product: "MacBook Pro M3",
+      date: "2024-01-17",
+      time: "14:30",
+      quantity: 1,
+      status: "delivered",
+      amount: "₫45,000,000",
+    },
+    {
+      id: "#DH006",
+      customer: "Vũ Thị F",
+      email: "vuthif@email.com",
+      product: "Apple Watch Series 9",
+      date: "2024-01-17",
+      time: "16:00",
+      quantity: 2,
+      status: "pending",
+      amount: "₫18,000,000",
+    },
+    {
+      id: "#DH007",
+      customer: "Đặng Văn G",
+      email: "dangvang@email.com",
+      product: "Sony WH-1000XM5",
+      date: "2024-01-18",
+      time: "09:15",
+      quantity: 1,
+      status: "delivered",
+      amount: "₫8,500,000",
+    },
+    {
+      id: "#DH008",
+      customer: "Bùi Thị H",
+      email: "buithih@email.com",
+      product: "iPad Air 2024",
+      date: "2024-01-18",
+      time: "11:45",
+      quantity: 1,
+      status: "pending",
+      amount: "₫28,000,000",
     },
   ];
 
@@ -393,93 +454,207 @@ export default function Dashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Khách hàng</TableHead>
-                  <TableHead>Sản phẩm</TableHead>
-                  <TableHead>Ngày/Giờ</TableHead>
-                  <TableHead>Số lượng</TableHead>
-                  <TableHead>Trạng thái</TableHead>
-                  <TableHead>Thành tiền</TableHead>
-                  <TableHead className="text-right">Hành động</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {recentOrders.map((order) => (
-                  <TableRow key={order.id}>
-                    <TableCell>
-                      <div className="flex items-center space-x-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
-                          <AvatarFallback>
-                            {getInitials(order.customer)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="font-medium">{order.customer}</div>
-                          <div className="text-sm text-muted-foreground">
-                            {order.email}
+            {/* Desktop Table */}
+            <div className="hidden md:block">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Khách hàng</TableHead>
+                    <TableHead>Sản phẩm</TableHead>
+                    <TableHead>Ngày/Giờ</TableHead>
+                    <TableHead>Số lượng</TableHead>
+                    <TableHead>Trạng thái</TableHead>
+                    <TableHead>Thành tiền</TableHead>
+                    <TableHead className="text-right">Hành động</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentOrders.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell>
+                        <div className="flex items-center space-x-3">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src="" />
+                            <AvatarFallback>
+                              {getInitials(order.customer)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="font-medium">{order.customer}</div>
+                            <div className="text-sm text-muted-foreground">
+                              {order.email}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Film className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm">{order.product}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <Film className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm">{order.product}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div>
+                          <div className="text-sm">{order.date}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {order.time}
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="secondary">{order.quantity}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="outline"
+                          className={getOrderStatusColor(order.status)}
+                        >
+                          {getOrderStatusText(order.status)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <span className="font-medium">{order.amount}</span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                              <span className="sr-only">Mở menu</span>
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem>
+                              <Eye className="mr-2 h-4 w-4" />
+                              Xem chi tiết
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <Edit className="mr-2 h-4 w-4" />
+                              Chỉnh sửa
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="text-red-600">
+                              <Delete className="mr-2 h-4 w-4" />
+                              Xóa
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-4">
+              {recentOrders.map((order) => (
+                <div key={order.id} className="border rounded-lg p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src="" />
+                        <AvatarFallback>
+                          {getInitials(order.customer)}
+                        </AvatarFallback>
+                      </Avatar>
                       <div>
-                        <div className="text-sm">{order.date}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {order.time}
+                        <div className="font-medium">{order.customer}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {order.email}
                         </div>
                       </div>
-                    </TableCell>
-                    <TableCell>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                          <span className="sr-only">Mở menu</span>
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                          <Eye className="mr-2 h-4 w-4" />
+                          Xem chi tiết
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Edit className="mr-2 h-4 w-4" />
+                          Chỉnh sửa
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-600">
+                          <Delete className="mr-2 h-4 w-4" />
+                          Xóa
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Film className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">{order.product}</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Ngày:</span>
+                      <span>{order.date} {order.time}</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Số lượng:</span>
                       <Badge variant="secondary">{order.quantity}</Badge>
-                    </TableCell>
-                    <TableCell>
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Trạng thái:</span>
                       <Badge
                         variant="outline"
                         className={getOrderStatusColor(order.status)}
                       >
                         {getOrderStatusText(order.status)}
                       </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <span className="font-medium">{order.amount}</span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Mở menu</span>
-                            <MoreVertical className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Eye className="mr-2 h-4 w-4" />
-                            Xem chi tiết
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Edit className="mr-2 h-4 w-4" />
-                            Chỉnh sửa
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-600">
-                            <Delete className="mr-2 h-4 w-4" />
-                            Xóa
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Thành tiền:</span>
+                      <span className="font-medium text-green-600">{order.amount}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="mt-6">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious className="pointer-events-none opacity-50" />
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationLink isActive>
+                      1
+                    </PaginationLink>
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationLink>
+                      2
+                    </PaginationLink>
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationLink>
+                      3
+                    </PaginationLink>
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationNext />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
           </CardContent>
         </Card>
 
