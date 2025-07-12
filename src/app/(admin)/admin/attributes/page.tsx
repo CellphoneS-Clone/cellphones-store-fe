@@ -9,6 +9,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const mockAttributes = [
   {
@@ -200,7 +201,6 @@ export default function AttributePage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Thứ tự</TableHead>
                 <TableHead>Mã</TableHead>
                 <TableHead>Tên (VI/EN)</TableHead>
                 <TableHead>Loại</TableHead>
@@ -219,8 +219,6 @@ export default function AttributePage() {
                 <TableRow key={attr.id}>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Button size="icon" variant="outline" className="p-1" disabled>↑</Button>
-                      <Button size="icon" variant="outline" className="p-1" disabled>↓</Button>
                       <span className="ml-2">{attr.order}</span>
                     </div>
                   </TableCell>
@@ -521,27 +519,43 @@ export default function AttributePage() {
                       <span className="text-sm">{attr.public ? "Công khai" : "Nội bộ"}</span>
                     </div>
                   </div>
-                  {/* Order Controls */}
-                  <div className="flex items-center justify-center gap-2 pt-2 border-t">
-                    <Button size="sm" variant="outline" disabled>↑ Lên</Button>
-                    <Button size="sm" variant="outline" disabled>↓ Xuống</Button>
-                  </div>
                 </div>
               </Card>
             ))}
           </div>
         </div>
         {/* Pagination - UI only */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 p-4 border-t">
-          <div className="text-sm text-muted-foreground">
-            Hiển thị 1 - 3 trong tổng số 3 thuộc tính
-          </div>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline" disabled>Trước</Button>
-            <span className="text-sm px-3 py-1 bg-muted rounded">Trang 1 / 1</span>
-            <Button size="sm" variant="outline" disabled>Sau</Button>
-          </div>
-        </div>
+        <div className="mt-6">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious className="pointer-events-none opacity-50" />
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationLink isActive>
+                      1
+                    </PaginationLink>
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationLink>
+                      2
+                    </PaginationLink>
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationLink>
+                      3
+                    </PaginationLink>
+                  </PaginationItem>
+                  
+                  <PaginationItem>
+                    <PaginationNext />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
       </Card>
     </div>
   );
