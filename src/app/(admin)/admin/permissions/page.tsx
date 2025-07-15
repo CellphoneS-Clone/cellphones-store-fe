@@ -220,21 +220,18 @@ export default function Permissions() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Quản lý phân quyền</h1>
-          <p className="text-muted-foreground">
-            Quản lý người dùng, vai trò và quyền truy cập hệ thống
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight">Quản lý phân quyền</h1>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setShowAddUserDialog(true)}>
+        <div className="flex flex-wrap gap-2">
+          <Button  className='min-w-40' variant="outline" onClick={() => setShowAddUserDialog(true)}>
             Thêm người dùng
           </Button>
-          <Button variant="outline" onClick={() => setShowAddRoleDialog(true)}>
+          <Button className='min-w-40' variant="outline" onClick={() => setShowAddRoleDialog(true)}>
             Thêm vai trò
           </Button>
-          <Button variant="outline">
+          <Button className='min-w-40' variant="outline">
             Xuất dữ liệu
           </Button>
         </div>
