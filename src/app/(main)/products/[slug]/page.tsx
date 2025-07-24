@@ -5,11 +5,6 @@ import PaymentPromotions from '@/components/product/detail/PaymentPromotions';
 import TradeInSection from '@/components/product/detail/TradeInSection';
 import PromotionSection from '@/components/product/detail/PromotionSection';
 import ActionButtons from '@/components/product/detail/ActionButtons';
-import ImageCarousel from '@/components/product/detail/ImageCarousel';
-import ProductColors from '@/components/product/detail/ProductColors';
-import ProductImage from '@/components/product/detail/ProductImage';
-import ProductPrice from '@/components/product/detail/ProductPrice';
-import ProductVersions from '@/components/product/detail/ProductVersions';
 import TechnicalSpecs from '@/components/product/detail/TechnicalSpecs';
 import WarrantyOptions from '@/components/product/detail/WarrantyOptions';
 import RelatedAccessories from '@/components/product/detail/RelatedAccessories';
@@ -23,7 +18,10 @@ import RecommendationSection from '@/components/product/detail/RecommendationSec
 import HighlightSection from '@/components/product/detail/HighlightSection';
 import ReviewSection from '@/components/product/detail/ReviewSection';
 import QASection from '@/components/product/detail/QASection';
+import ProductImageGallery from '@/components/product/detail/ProductImageGallery';
+import ProductInfoPanel from '@/components/product/detail/ProductInfoPanel';
 import { Star } from 'lucide-react';
+import { useState } from 'react';
 import { use } from 'react';
 
 type Props = {
@@ -35,55 +33,76 @@ type Props = {
 export default function ProductDetail({ params }: Props) {
   const { slug } = use(params);
 
+  const [currentImage, setCurrentImage] = useState<{ src: string; alt: string; index?: number }>({
+    src: '/images/ipad_pro.png',
+    alt: 'Product Image 1',
+    index: 0,
+  });
+
   const handleFavoriteClick = () => console.log('Favorite clicked');
   const handleQAClick = () => console.log('Q&A clicked');
   const handleSpecsClick = () => console.log('Specs clicked');
   const handleCompareClick = () => console.log('Compare clicked');
-  const handleImageClick = (index: number) => console.log(`Image ${index} clicked`);
-  const handleColorClick = (color: string) => console.log(`Color ${color} clicked`);
-  const handlePrevClick = () => console.log('Previous image clicked');
-  const handleNextClick = () => console.log('Next image clicked');
   const handleVersionClick = (version: string) => console.log(`Version ${version} clicked`);
+  const handleColorClick = (color: string) => {
+    const selectedColor = colors.find((c) => c.name === color);
+    if (selectedColor) {
+      const imageIndex = images.findIndex((img) => img.src === selectedColor.imageSrc);
+      setCurrentImage({
+        src: selectedColor.imageSrc,
+        alt: selectedColor.imageAlt,
+        index: imageIndex !== -1 ? imageIndex : undefined,
+      });
+      console.log(`Color ${color} clicked`);
+    }
+  };
   const handleAddToCart = (accessory: string) => console.log(`Added ${accessory} to cart`);
+  const handlePrevClick = () => {
+    setCurrentImage((prev) => {
+      const currentIndex = prev.index ?? 0;
+      const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+      return { ...images[newIndex], index: newIndex };
+    });
+  };
+  const handleNextClick = () => {
+    setCurrentImage((prev) => {
+      const currentIndex = prev.index ?? 0;
+      const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+      return { ...images[newIndex], index: newIndex };
+    });
+  };
+  const handleImageClick = (index: number) => {
+    setCurrentImage({ ...images[index], index });
+  };
 
-  const ProductDetail = {
-    images: [
-      { src: '/images/top_banner.png', alt: 'Hình phụ 1' },
-      { src: '/images/top_banner.png', alt: 'Hình phụ 2' },
-      { src: '/images/top_banner.png', alt: 'Hình phụ 3' },
-      { src: '/images/top_banner.png', alt: 'Hình phụ 4' },],
-    colors: [
-      { name: 'Titan Đen', price: '36.590.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Đen' },
-      { name: 'Titan Tự nhiên', price: '36.890.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Tự nhiên' },
-      { name: 'Titan Trắng', price: '36.790.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Trắng' },
-      { name: 'Titan Sa Mạc', price: '36.490.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Sa Mạc' },
-    ],
-
-    dataRange: ['1TB', '512GB', '256GB'],
-
-  }
   const images = [
-    { src: '/images/top_banner.png', alt: 'Hình phụ 1' },
-    { src: '/images/top_banner.png', alt: 'Hình phụ 2' },
-    { src: '/images/top_banner.png', alt: 'Hình phụ 3' },
-    { src: '/images/top_banner.png', alt: 'Hình phụ 4' },
+    { src: '/images/ipad_pro.png', alt: 'Product Image 1' },
+    { src: '/images/shinhan.webp', alt: 'Product Image 2' },
+    { src: '/images/top_banner2.png', alt: 'Product Image 3' },
+    { src: '/images/ipad_pro.png', alt: 'Product Image 1' },
+    { src: '/images/shinhan.webp', alt: 'Product Image 2' },
+    { src: '/images/top_banner2.png', alt: 'Product Image 3' },
+    { src: '/images/ipad_pro.png', alt: 'Product Image 1' },
+    { src: '/images/shinhan.webp', alt: 'Product Image 2' },
+    { src: '/images/top_banner2.png', alt: 'Product Image 3' },
   ];
 
-  const mainImage = { src: '/images/top_banner.png', alt: 'Hình sản phẩm iPhone 14 Pro Max' };
-  const priceData = { price: '30.890.000đ', originalPrice: '34.990.000đ' };
-  const versions = ['1TB', '512GB', '256GB'];
+  const price = '20.990.000đ';
+  const originalPrice = '23.990.000đ';
+  const versions = ['256GB', '512GB', '1TB'];
   const colors = [
-    { name: 'Titan Đen', price: '36.590.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Đen' },
-    { name: 'Titan Tự nhiên', price: '36.890.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Tự nhiên' },
-    { name: 'Titan Trắng', price: '36.790.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Trắng' },
-    { name: 'Titan Sa Mạc', price: '36.490.000₫', imageSrc: '/images/top_banner.png', imageAlt: 'Titan Sa Mạc' },
+    { name: 'Black Titanium', price: '20.990.000đ', imageSrc: '/images/ipad_pro.png', imageAlt: 'Black Titanium' },
+    { name: 'White Titanium', price: '21.490.000đ', imageSrc: '/images/shinhan.webp', imageAlt: 'White Titanium' },
+    { name: 'Blue Titanium', price: '21.990.000đ', imageSrc: '/images/top_banner2.png', imageAlt: 'Blue Titanium' },
   ];
+
   const accessories = [
     { name: 'Dán kính cường lực iPhone 16 Pro Max chính hãng JCPal', imageSrc: '/images/top_banner.png', imageAlt: 'Phụ kiện 2', price: '390.000đ', originalPrice: '450.000đ' },
     { name: 'Dán kính cường lực iPhone 16 Pro Max chính hãng JCPal', imageSrc: '/images/top_banner.png', imageAlt: 'Phụ kiện 2', price: '390.000đ', originalPrice: '450.000đ' },
     { name: 'Dán kính cường lực iPhone 16 Pro Max chính hãng JCPal', imageSrc: '/images/top_banner.png', imageAlt: 'Phụ kiện 2', price: '390.000đ', originalPrice: '450.000đ' },
     { name: 'Dán kính cường lực iPhone 16 Pro Max chính hãng JCPal', imageSrc: '/images/top_banner.png', imageAlt: 'Phụ kiện 2', price: '390.000đ', originalPrice: '450.000đ' },
   ];
+
   const technicalSpecs: [string, string][] = [
     ['Kích thước màn hình', '6.8 inches'],
     ['Công nghệ màn hình', 'Dynamic AMOLED 2X'],
@@ -101,10 +120,12 @@ export default function ProductDetail({ params }: Props) {
     ['Loại CPU', '3.39GHz,3.1GHz,2.9GHz,2.2GHz'],
     ['Tương thích', 'Bút SPEN - tích hợp sẵn lên máy'],
   ];
+
   const promotions = [
     { id: 1, text: 'Trả góp 0% đến 12 tháng, 0đ trả trước qua Samsung Finance+', link: '#' },
     { id: 2, text: 'Tặng voucher 500.000đ mua Gia dụng (áp dụng 1 số sản phẩm nhất định)', link: '#' },
   ];
+
   const paymentPromotions = [
     { text: 'Xem chính sách ưu đãi dành cho thành viên Smember' },
     { img: '/images/hsbc_full-removebg-preview.png', text: 'Hoàn tiền đến 2 triệu khi mở thẻ tín dụng HSBC' },
@@ -116,7 +137,9 @@ export default function ProductDetail({ params }: Props) {
     { img: '/images/images.png', text: 'Giảm đến 200K khi thanh toán qua MOMO' },
     { text: 'Liên hệ B2B để được tư vấn giá tốt nhất cho khách hàng doanh nghiệp khi mua số lượng nhiều' },
   ];
+
   const tradeInOptions = ['Tìm sản phẩm muốn t', 'iPhone 15 Pro Max', 'Samsung S24 Ultra'];
+
   const features = [
     { id: 'feature-1', title: 'Samsung Galaxy S24 dùng chip gì?', description: 'Chip A16 Bionic với 5 nhân CPU và 16 nhân Neural Engine, giúp xử lý đa nhiệm nhanh chóng và nâng cao hiệu suất đồ họa.' },
     { id: 'feature-2', title: 'Dung lượng', description: 'Chip A16 Bionic với 5 nhân CPU và 16 nhân Neural Engine, giúp xử lý đa nhiệm nhanh chóng và nâng cao hiệu suất đồ họa.' },
@@ -142,22 +165,27 @@ export default function ProductDetail({ params }: Props) {
                 onSpecsClick={handleSpecsClick}
                 onCompareClick={handleCompareClick}
               />
-              <ProductImage
-                src={mainImage.src}
-                alt={mainImage.alt}
+              <ProductImageGallery
+                images={images}
+                currentImage={currentImage}
                 onPrevClick={handlePrevClick}
                 onNextClick={handleNextClick}
+                onImageClick={handleImageClick}
               />
-              <ImageCarousel images={images} onImageClick={handleImageClick} />
               <ProductCommitmentSection />
               <TechnicalSpecs specs={technicalSpecs} />
               <FAQSection features={features} />
             </div>
 
             <div className="w-full lg:w-1/2 pl-0 lg:pl-4">
-              <ProductPrice price={priceData.price} originalPrice={priceData.originalPrice} />
-              <ProductVersions versions={versions} onVersionClick={handleVersionClick} />
-              <ProductColors colors={colors} onColorClick={handleColorClick} />
+              <ProductInfoPanel
+                price={price}
+                originalPrice={originalPrice}
+                versions={versions}
+                colors={colors}
+                onVersionClick={handleVersionClick}
+                onColorClick={handleColorClick}
+              />
               <StudentOfferSection />
               <AdImageSection />
               <StoreAvailabilitySection />
@@ -176,7 +204,6 @@ export default function ProductDetail({ params }: Props) {
           <QASection />
         </div>
       </div>
-
     </>
   );
 }
