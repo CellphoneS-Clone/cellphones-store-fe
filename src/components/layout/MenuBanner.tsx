@@ -127,7 +127,7 @@ export function MenuBanner({ isOverlay = false, onClose }: MenuBannerProps) {
       onClick={isOverlay ? onClose : undefined}
     >
       <div
-        className={`${isOverlay ? 'w-[225px] max-w-[1200px] px-4 ml-65 pt-[8px] mt-16' : 'md:block w-[225px] h-full'} rounded-2xl shadow-[0_1px_2px_0_rgba(60,64,67,0.1),0_2px_6px_2px_rgba(60,64,67,0.15)] overflow-hidden bg-white`}
+        className={`${isOverlay ? 'w-[225px] max-w-[1200px] px-4 ml-[65px] md:ml-[45px] pt-[8px] mt-18' : 'md:block w-[225px] h-full'} rounded-2xl shadow-[0_1px_2px_0_rgba(60,64,67,0.1),0_2px_6px_2px_rgba(60,64,67,0.15)] overflow-hidden bg-white`}
         onClick={(e) => isOverlay && e.stopPropagation()}
       >
         <div className="menu-wrapper overflow-y-auto scrollbar-none p-2">

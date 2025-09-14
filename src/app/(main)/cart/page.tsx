@@ -60,7 +60,7 @@ export default function CartPage(): JSX.Element {
   };
 
   return (
-    <div className='md:max-w-[600px] mx-auto relative bg-gray-100'>
+    <div className='md:max-w-[1200px] mx-auto relative bg-gray-100'>
       <div className="min-h-screen">
         {/* Header */}
         <div className="sticky top-0 z-10 w-full">

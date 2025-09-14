@@ -16,8 +16,8 @@ interface RightBannerProps {
 
 export function RightBanner({ banners }: RightBannerProps) {
   return (
-    <div className="block-top-home__right-banner w-[265px] hidden lg:block h-full">
-      <div className="right-banner h-full max-w-[265px] w-full">
+    <div className="block-top-home__right-banner w-auto hidden lg:block h-full">
+      <div className="right-banner h-full max-w-[280px] w-full">
         {banners.map((banner, index) => (
           <Link
             key={index}

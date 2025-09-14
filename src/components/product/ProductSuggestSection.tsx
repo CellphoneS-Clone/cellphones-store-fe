@@ -6,16 +6,17 @@ import { CustomRadialIcon } from '../icons/MainIcon';
 import ProductCard from './ProductCard';
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   image: string;
   alt: string;
   price: number;
-  originalPrice: number;
-  sNullPrice: number;
-  sStudentDiscount: number;
-  promotion: string;
+  originalPrice?: number;
+  sNullPrice?: number;
+  sStudentDiscount?: number;
+  promotion?: string;
   rating: number;
+  discount?: number;
 }
 
 interface ProductSuggestSectionProps {
@@ -58,7 +59,17 @@ export function ProductSuggestSection({ products, formatPrice }: ProductSuggestS
         <div ref={suggestRef} className="overflow-hidden">
           <div className="grid grid-flow-col auto-cols-[minmax(224.8px,_1fr)] gap-2 snap-x snap-mandatory">
             {products.map((product) => (
-              <ProductCard key={product.id} />
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                originalPrice={product.originalPrice}
+                image={product.image}
+                rating={product.rating}
+                discount={product.discount}
+                promotion={product.promotion}
+              />
             ))}
           </div>
         </div>

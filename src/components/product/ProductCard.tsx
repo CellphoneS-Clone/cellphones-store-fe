@@ -7,18 +7,19 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
-function ProductCard() {
-    const [isFavorite, setIsFavorite] = useState(false)
+interface ProductCardProps {
+    id: string;
+    name: string;
+    price: number;
+    originalPrice?: number;
+    image: string;
+    rating: number;
+    discount?: number;
+    promotion?: string;
+}
 
-    // Dữ liệu cứng mẫu
-    const id = "iphone-15-pro-max-256gb";
-    const name = "iPhone 15 Pro Max 256GB";
-    const price = 32990000;
-    const originalPrice = 34990000;
-    const image = "/images/ipad_pro.png"; 
-    const rating = 5;
-    const discount = 6;
-    const promotion = "Tặng phiếu mua hàng 500.000đ";
+function ProductCard({ id, name, price, originalPrice, image, rating, discount, promotion }: ProductCardProps) {
+    const [isFavorite, setIsFavorite] = useState(false)
 
     const handleFavoriteClick = (e: React.MouseEvent) => {
         e.preventDefault()
@@ -26,25 +27,35 @@ function ProductCard() {
     }
 
     return (
-        <Card className="w-[225px] overflow-hidden">
+        <Card className="w-[221px] overflow-hidden rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.1)] bg-white 
+             transition-transform duration-300 ease-in-out
+             hover:shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:scale-100 
+             active:scale-95 cursor-pointer">
             {/* Phần hình ảnh */}
             <CardHeader className="p-0 relative">
                 <Link href={`/products/${id}`} className="block">
-                    <div className="relative aspect-square">
+                    <div
+                        className="relative w-[150px] h-[150px] mx-auto 
+             overflow-hidden rounded-md 
+             transition-transform duration-300 ease-in-out 
+             hover:scale-103 active:scale-95 cursor-pointer"
+                    >
                         <Image
                             src={image}
                             alt={name}
                             fill
-                            className="object-cover"
+                            className="object-cover rounded-md"
                         />
-                        {/* Thông tin giảm giá */}
-                        <div className="absolute top-0 left-0 flex flex-col gap-1">
-                            {discount && (
-                                <div className="bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-r-md shadow-lg transform -translate-x-2 hover:translate-x-0 transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-105 hover:bg-red-600">
-                                    -{discount}%
-                                </div>
-                            )}
-                        </div>
+                    </div>
+                    {/* Thông tin giảm giá */}
+                    <div className="absolute top-0 left-0 flex flex-col gap-1">
+                        {discount && (
+                            <div className="bg-red-500 text-white text-xs font-bold px-3 
+                                py-1.5 rounded-r-md shadow-lg transform -translate-x-2 hover:translate-x-0 transition-all duration-300 ease-in-out 
+                                hover:shadow-xl hover:scale-105 hover:bg-red-600">
+                                -{discount}%
+                            </div>
+                        )}
                     </div>
                 </Link>
             </CardHeader>
