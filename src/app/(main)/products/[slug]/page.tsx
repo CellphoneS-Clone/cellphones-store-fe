@@ -34,7 +34,7 @@ export default function ProductDetail({ params }: Props) {
   const { slug } = use(params);
 
   const [currentImage, setCurrentImage] = useState<{ src: string; alt: string; index?: number }>({
-    src: '/images/ipad_pro.png',
+    src: '/images/my_phone/New folder/dien-thoai-itel-p55-plus-8gb-256gb_1__2.webp',
     alt: 'Product Image 1',
     index: 0,
   });
@@ -76,24 +76,24 @@ export default function ProductDetail({ params }: Props) {
   };
 
   const images = [
-    { src: '/images/ipad_pro.png', alt: 'Product Image 1' },
-    { src: '/images/shinhan.webp', alt: 'Product Image 2' },
-    { src: '/images/top_banner2.png', alt: 'Product Image 3' },
-    { src: '/images/ipad_pro.png', alt: 'Product Image 1' },
-    { src: '/images/shinhan.webp', alt: 'Product Image 2' },
-    { src: '/images/top_banner2.png', alt: 'Product Image 3' },
-    { src: '/images/ipad_pro.png', alt: 'Product Image 1' },
-    { src: '/images/shinhan.webp', alt: 'Product Image 2' },
-    { src: '/images/top_banner2.png', alt: 'Product Image 3' },
+    { src: '/images/my_phone/New folder/dien-thoai-itel-p55-plus-8gb-256gb_1__2.webp', alt: 'Product Image 1' },
+    { src: '/images/my_phone/New folder/dien-thoai-meizu-mblu-21_3__1.webp', alt: 'Product Image 2' },
+    { src: '/images/my_phone/New folder/dien-thoai-meizu-mblu-21_4__2.webp', alt: 'Product Image 3' },
+    { src: '/images/my_phone/New folder/dien-thoai-nubia-a56_1.webp', alt: 'Product Image 1' },
+    { src: '/images/my_phone/New folder/dien-thoai-nubia-z70s-ultra-5g_10_.webp', alt: 'Product Image 2' },
+    { src: '/images/my_phone/New folder/dien-thoai-nubia-z70s-ultra-5g_11__2.webp', alt: 'Product Image 3' },
+    { src: '/images/my_phone/New folder/dien-thoai-oppo-reno12-5g_5__5.webp', alt: 'Product Image 1' },
+    { src: '/images/my_phone/New folder/dien-thoai-zte-blade-a55_1.webp', alt: 'Product Image 2' },
+    { src: '/images/my_phone/New folder/group_1_7.webp', alt: 'Product Image 3' },
   ];
 
   const price = '20.990.000đ';
   const originalPrice = '23.990.000đ';
   const versions = ['256GB', '512GB', '1TB'];
   const colors = [
-    { name: 'Black Titanium', price: '20.990.000đ', imageSrc: '/images/ipad_pro.png', imageAlt: 'Black Titanium' },
-    { name: 'White Titanium', price: '21.490.000đ', imageSrc: '/images/shinhan.webp', imageAlt: 'White Titanium' },
-    { name: 'Blue Titanium', price: '21.990.000đ', imageSrc: '/images/top_banner2.png', imageAlt: 'Blue Titanium' },
+    { name: 'Black Titanium', price: '20.990.000đ', imageSrc: '/images/my_phone/New folder/dien-thoai-meizu-mblu-21_4__2.webp', imageAlt: 'Black Titanium' },
+    { name: 'White Titanium', price: '21.490.000đ', imageSrc: '/images/my_phone/New folder/dien-thoai-oppo-reno12-5g_5__5.webp', imageAlt: 'White Titanium' },
+    { name: 'Blue Titanium', price: '21.990.000đ', imageSrc: '/images/my_phone/New folder/dien-thoai-nubia-z70s-ultra-5g_10_.webp', imageAlt: 'Blue Titanium' },
   ];
 
   const accessories = [

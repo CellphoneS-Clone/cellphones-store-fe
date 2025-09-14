@@ -298,7 +298,7 @@ export default function MenuSlidePage() {
 
                 {/* Top deal xịn */}
                 <div id="top-deals-section" className="mt-10">
-                    <div className="bg-[#d7001d] w-full h-[695px] flex flex-col rounded-xl px-4">
+                    <div className="bg-[#d7001d] w-full h-[670px] flex flex-col rounded-xl px-4">
                         <div className=" flex flex-col justify-between mt-10 md:mt-1 lg:mt-4">
                             <Image
                                 src="/images/ảnh sinh viên lựa chọn.webp"
@@ -327,13 +327,13 @@ export default function MenuSlidePage() {
                 </div>
 
                 {/* Toàn bộ Laptop */}
-                <div className='relative mt-10 sm:mt-30 w-full h-[680px] lg:h-auto bg-[#efefef] rounded-lg border-2 border-[#dc000f]'>
+                <div className='relative mt-10 sm:mt-50 w-full h-[680px] lg:h-auto bg-[#efefef] rounded-lg border-2 border-[#dc000f]'>
                     <Image
                         src="/images/B2S_2025_Title_Laptop-desk.webp"
                         alt="Laptop Title"
                         width={1200}
                         height={150}
-                        className="absolute bottom-155 lg:bottom-157 left-1/2 transform -translate-x-1/2 w-full max-w-[1150px] h-auto"
+                        className="absolute bottom-155 lg:bottom-148 left-1/2 transform -translate-x-1/2 w-full max-w-[1150px] h-auto"
                     />
                     <div className="flex flex-col justify-between items-center mt-2 lg:mt-4 md:mt-2 pt-6 md:pt-10 lg:pt-15 w-full px-4">
                         <h3 className="text-2xl font-bold text-black z-10">

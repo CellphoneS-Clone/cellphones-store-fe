@@ -23,7 +23,7 @@ export default function MainLayout({
             <PaymentFormProvider>
                 <div className="min-h-screen flex flex-col">
                     <Header />
-                    <main className="flex-grow bg-gray-100 mt-[64px]">
+                    <main className="flex-grow bg-white mt-[64px]">
                         {children}
                     </main>
                     {!isChatOpen && (

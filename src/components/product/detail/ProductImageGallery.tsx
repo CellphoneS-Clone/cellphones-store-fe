@@ -24,12 +24,12 @@ export default function ProductImageGallery({
   return (
     <div className="mt-6">
       {/* Main Image Display */}
-      <div className="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden group">
+      <div className="relative w-full h-96 bg-white rounded-lg overflow-hidden group flex items-center justify-center">
         <Image
           src={currentImage.src}
           alt={currentImage.alt}
           fill
-          className="object-cover"
+          className="object-contain"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
         <div className="absolute inset-0 z-10 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -54,7 +54,7 @@ export default function ProductImageGallery({
           <Button
             key={index}
             className={cn(
-              "relative w-16 h-16 bg-gray-100 rounded-lg overflow-hidden shrink-0 border transition-all",
+              "relative w-16 h-16 bg-white rounded-lg overflow-hidden shrink-0 border transition-all",
               currentImage.index === index && "ring-2 ring-blue-500 border-blue-500"
             )}
             onClick={() => onImageClick(index)}
