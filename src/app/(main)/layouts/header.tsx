@@ -78,7 +78,9 @@ const Header = () => {
           <CartItem icon={<CartIcon className="w-6 h-6" />} text="Giỏ<br />hàng" />
 
           {/* Tài khoản */}
-          <UserItem icon={<UserIcon className="w-6 h-6" />} name="Dương" />
+          <Link href="/information">
+            <UserItem icon={<UserIcon className="w-6 h-6" />} name="Dương" />
+          </Link>
         </div>
       </div>
 
