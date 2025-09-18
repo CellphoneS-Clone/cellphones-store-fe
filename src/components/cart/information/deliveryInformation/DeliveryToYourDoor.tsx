@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Input from '../../input/Input';
-import Select from '../../../common/Select';
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem
+} from '@/components/ui/select';
 import { getProvinces, getDistrictsByProvinceCode } from '@/services/locationService';
 import { Province, District } from '@/types/location';
 import { usePaymentForm } from '@/context/PaymentFormContext';
@@ -105,25 +111,48 @@ const DeliveryToYourDoor = () => {
                 // placeholder="Số điện thoại"
             />
             
-            <Select
-                label="TỈNH/THÀNH PHỐ *"
-                // placeholder="Chọn tỉnh/thành phố"
-                options={provinceOptions}
-                value={formData.delivery.province}
-                onChange={handleProvinceChange}
-                disabled={loading}
-                // required
-            />
-            
-            <Select
-                label="QUẬN/HUYỆN *"
-                // placeholder="Chọn quận/huyện"
-                options={districtOptions}
-                value={formData.delivery.district}
-                onChange={handleDistrictChange}
-                disabled={loading || !formData.delivery.province}
-                // required
-            />
+
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">TỈNH/THÀNH PHỐ *</label>
+                            <Select
+                                value={formData.delivery.province?.value?.toString() ?? ''}
+                                onValueChange={val => {
+                                    const option = provinceOptions.find(opt => opt.value.toString() === val);
+                                    if (option) handleProvinceChange(option);
+                                }}
+                                disabled={loading}
+                            >
+                                <SelectTrigger className="w-full" />
+                                <SelectContent>
+                                    {provinceOptions.map(option => (
+                                        <SelectItem key={option.value} value={option.value.toString()}>
+                                            {option.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
+                            <label className="block mb-1 text-sm font-medium">QUẬN/HUYỆN *</label>
+                            <Select
+                                value={formData.delivery.district?.value?.toString() ?? ''}
+                                onValueChange={val => {
+                                    const option = districtOptions.find(opt => opt.value.toString() === val);
+                                    if (option) handleDistrictChange(option);
+                                }}
+                                disabled={loading || !formData.delivery.province}
+                            >
+                                <SelectTrigger className="w-full" />
+                                <SelectContent>
+                                    {districtOptions.map(option => (
+                                        <SelectItem key={option.value} value={option.value.toString()}>
+                                            {option.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
 
             <Input 
                 label='PHƯỜNG/XÃ *' 
