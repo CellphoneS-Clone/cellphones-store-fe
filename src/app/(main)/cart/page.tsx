@@ -31,9 +31,9 @@ export default function CartPage(): JSX.Element {
 
   const handleProductSelection = (productId: string, checked: boolean) => {
     updateProductSelection(productId, checked);
-    
+
     // Update select all checkbox
-    const allSelected = products.every(product => 
+    const allSelected = products.every(product =>
       product.id === productId ? checked : product.isSelected
     );
     setIsSelectAll(allSelected);
@@ -65,7 +65,7 @@ export default function CartPage(): JSX.Element {
         {/* Header */}
         <div className="sticky top-0 z-10 w-full">
           <div className="flex px-4 py-3">
-            <Link href={'/'}> 
+            <Link href={'/'}>
               <ChevronLeft className="w-6 h-6 text-gray-600" />
             </Link>
             <div className='mx-auto'>
@@ -114,13 +114,13 @@ export default function CartPage(): JSX.Element {
             />
           ))}
         </div>
-        
+
         <div className="h-24"></div>
       </div>
 
       {/* Bottom Summary */}
-      <div className="fixed bottom-0 w-full flex justify-start z-50">
-        <div className="w-full md:max-w-[600px] flex justify-between bg-white shadow-2xl p-4 rounded-t-lg">
+      <div className="fixed bottom-0 left-0 right-0 flex items-center justify-center w-full z-50">
+        <div className="w-full md:max-w-[800px] flex justify-between bg-white shadow-2xl p-4 rounded-t-lg">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center">
               <span className="text-gray-700">Tạm tính: </span>
@@ -129,17 +129,19 @@ export default function CartPage(): JSX.Element {
               </span>
             </div>
           </div>
-          <Button 
-            className={`py-3 px-3 rounded-lg font-medium text-white transition-all duration-300 ease-in-out ${
-              hasSelectedProducts 
-                ? 'bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105' 
-                : 'bg-gray-400 hover:bg-gray-500'
-            }`}
-            onClick={handleProceedToPayment}
-            disabled={!hasSelectedProducts}
-          >
-            Mua ngay
-          </Button>
+          <Link href={'/cart/payment-info'} className="mr-2">
+            <Button
+              className={`py-3 px-3 rounded-lg font-medium text-white transition-all duration-300 ease-in-out ${hasSelectedProducts
+                  ? 'bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105'
+                  : 'bg-gray-400 hover:bg-gray-500'
+                }`}
+              onClick={handleProceedToPayment}
+              disabled={!hasSelectedProducts}
+            >
+              Mua ngay
+            </Button>
+          </Link>
+
         </div>
       </div>
     </div>
