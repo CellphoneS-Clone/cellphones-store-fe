@@ -1,7 +1,6 @@
 // layout.tsx (RootLayout)
-import { MenuProvider } from "@/context/MenuContext";
+import { Providers } from "@/providers/ReduxProvider";
 import "./globals.css";
-import { ThemeProvider } from "@/components/admin/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -12,16 +11,9 @@ export default function RootLayout({
         className={`antialiased bg-gray-100`}
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem  
-          disableTransitionOnChange
-        >
-          <MenuProvider>
-            {children}
-          </MenuProvider>
-        </ThemeProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

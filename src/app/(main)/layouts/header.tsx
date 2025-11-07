@@ -20,10 +20,37 @@ import {
   CartIcon,
   UserIcon,
 } from "@/components/icons/HeaderIcons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Simple client-side check: try to read stored user or token
+    try {
+      const rawUser = localStorage.getItem("user");
+      if (rawUser) {
+        try {
+          const parsed = JSON.parse(rawUser);
+          setUserName(parsed?.name ?? String(parsed));
+          return;
+        } catch (e) {
+          setUserName(rawUser);
+          return;
+        }
+      }
+      const token = localStorage.getItem("access_token") || localStorage.getItem("token");
+      if (token) {
+        // token present — optionally fetch profile here. For now show generic 'Tài khoản'
+        setUserName("Tài khoản");
+        return;
+      }
+      setUserName(null);
+    } catch (err) {
+      setUserName(null);
+    }
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-[#d70018] shadow-md">
@@ -78,9 +105,17 @@ const Header = () => {
           <CartItem icon={<CartIcon className="w-6 h-6" />} text="Giỏ<br />hàng" />
 
           {/* Tài khoản */}
-          <Link href="/information">
-            <UserItem icon={<UserIcon className="w-6 h-6" />} name="Dương" />
-          </Link>
+          {userName ? (
+            <Link href="/information">
+              <UserItem icon={<UserIcon className="w-6 h-6" />} name={userName} />
+            </Link>
+          ) : (
+            <Link href="/login">
+              <button className="bg-white text-[#d70018] rounded-xl px-3 py-1 text-[13px] font-medium">
+                Đăng nhập
+              </button>
+            </Link>
+          )}
         </div>
       </div>
 

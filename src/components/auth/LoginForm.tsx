@@ -8,15 +8,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { useLoginMutation } from '@/store/features/authApi'
 
 export default function LoginForm() {
     const [formData, setFormData] = useState({
-        phone: '',
+        email: '',
         password: '',
         rememberMe: false,
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (e: any) => {
         const { name, value, type, checked } = e.target;
@@ -34,9 +36,30 @@ export default function LoginForm() {
         }));
     };
 
-    const handleSubmit = (e: any) => {
+    const [login, { isLoading }] = useLoginMutation()
+
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        setErrorMessage('');
+        
+        console.log('Login attempt:', { email: formData.email });
+        
+        try {
+            const result: any = await login({ email: formData.email, password: formData.password }).unwrap()
+            console.log('Login success:', result);
+            
+            if (result?.data?.access_token) {
+                localStorage.setItem('access_token', result.data.access_token)
+            }
+            if (result?.data?.refresh_token) {
+                localStorage.setItem('refresh_token', result.data.refresh_token)
+            }
+            // redirect to user info page
+            window.location.href = '/'
+        } catch (err: any) {
+            console.error('Login error:', err)
+            setErrorMessage(err?.data?.message || err?.message || 'Đăng nhập thất bại. Vui lòng thử lại.')
+        }
     };
 
     return (
@@ -50,16 +73,16 @@ export default function LoginForm() {
             >
                 <div className="w-full flex flex-col gap-3 tablet:gap-4">
                     <div className="flex flex-col gap-1 tablet:gap-2">
-                        <Label htmlFor="phone" className="text-sm tablet:text-base font-medium">
-                            Số điện thoại
+                        <Label htmlFor="email" className="text-sm tablet:text-base font-medium">
+                            Email
                         </Label>
                         <Input
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="Nhập số điện thoại"
-                            maxLength={10}
+                            placeholder="Nhập email"
                             className="min-h-[40px] tablet:min-h-[48px] text-sm tablet:text-base"
                         />
                     </div>
@@ -115,11 +138,19 @@ export default function LoginForm() {
                         Quên mật khẩu?
                     </Link>
                 </div>
+                
+                {errorMessage && (
+                    <div className="w-full p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <p className="text-sm text-red-600">{errorMessage}</p>
+                    </div>
+                )}
+                
                 <Button
                     type="submit"
-                    className="w-full min-h-[40px] tablet:min-h-[48px] text-sm tablet:text-base font-medium bg-red-500 hover:bg-red-700 text-white"
+                    disabled={isLoading}
+                    className="w-full min-h-[40px] tablet:min-h-[48px] text-sm tablet:text-base font-medium bg-red-500 hover:bg-red-700 text-white disabled:opacity-50"
                 >
-                    Đăng nhập
+                    {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                 </Button>
 
                 <div className="w-full flex items-center gap-2">
