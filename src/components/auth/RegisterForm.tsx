@@ -17,6 +17,7 @@ import {
     ArrowLeft,
     GraduationCap,
 } from 'lucide-react';
+import { useRegisterMutation } from '@/store/features/authApi'
 
 export default function RegisterForm() {
     const [formData, setFormData] = useState({
@@ -32,6 +33,9 @@ export default function RegisterForm() {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [registerUser, { isLoading }] = useRegisterMutation();
 
     const handleInputChange = (e: any) => {
         const { name, value, type, checked } = e.target;
@@ -53,9 +57,54 @@ export default function RegisterForm() {
             isStudent: e,
         }));
     };
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        setErrorMessage('');
+        setSuccessMessage('');
+
+        // Basic validation
+        if (!formData.name?.trim()) return setErrorMessage('Vui lòng nhập họ và tên');
+        if (!formData.phone?.trim()) return setErrorMessage('Vui lòng nhập số điện thoại');
+        if (!formData.password) return setErrorMessage('Vui lòng nhập mật khẩu');
+        if (formData.password !== formData.confirmPassword) return setErrorMessage('Mật khẩu nhập lại không khớp');
+
+        // Build payload for API
+        let dateOfBirth: string | undefined = undefined;
+        if (formData.birthday) {
+            const d = new Date(formData.birthday);
+            if (!isNaN(d.getTime())) {
+                dateOfBirth = d.toISOString();
+            }
+        }
+
+        const payload = {
+            full_name: formData.name,
+            email: formData.email || '',
+            phone: formData.phone,
+            gender: undefined as string | undefined,
+            date_of_birth: dateOfBirth,
+            avatar_url: undefined as string | undefined,
+            password: formData.password,
+        };
+
+        try {
+            if (!payload.email) {
+                return setErrorMessage('Bạn cần nhập email để thực hiện xác minh tài khoản.');
+            }
+            const res: any = await registerUser(payload).unwrap();
+            // API trả về: { message, email }
+            const emailForVerify = res?.email || payload.email;
+            setSuccessMessage(res?.message || 'Đăng ký thành công! Chuyển đến trang xác minh email...');
+            // điều hướng tới trang xác minh email kèm query email
+            setTimeout(() => {
+                window.location.href = `/verify-email?email=${encodeURIComponent(emailForVerify)}`;
+            }, 1000);
+        } catch (err: any) {
+            console.error('Register error:', err);
+            setErrorMessage(
+                err?.data?.detail || err?.data?.message || err?.message || 'Đăng ký thất bại. Vui lòng thử lại.'
+            );
+        }
     };
 
     return (
@@ -288,6 +337,17 @@ export default function RegisterForm() {
                         </Label>
                     </div>
                 </div>
+                {errorMessage && (
+                    <div className="w-full p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <p className="text-sm text-red-600">{errorMessage}</p>
+                    </div>
+                )}
+                {successMessage && (
+                    <div className="w-full p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <p className="text-sm text-green-700">{successMessage}</p>
+                    </div>
+                )}
+
                 <div className="shadow-group-button w-full z-10 box-content grid px-2 tablet:px-8 py-3 tablet:py-4 grid-cols-2 gap-3 tablet:gap-4 sticky bottom-0 left-0 right-0 bg-white -translate-x-2 tablet:-translate-x-4">
                     <Button
                         variant="outline"
@@ -301,9 +361,10 @@ export default function RegisterForm() {
                     </Button>
                     <Button
                         type="submit"
-                        className="w-full min-h-[40px] tablet:min-h-[48px] text-sm tablet:text-base font-medium bg-red-500 hover:bg-red-700 text-white"
+                        disabled={isLoading}
+                        className="w-full min-h-[40px] tablet:min-h-[48px] text-sm tablet:text-base font-medium bg-red-500 hover:bg-red-700 text-white disabled:opacity-50"
                     >
-                        Hoàn tất đăng ký
+                        {isLoading ? 'Đang xử lý...' : 'Hoàn tất đăng ký'}
                     </Button>
                 </div>
             </form>

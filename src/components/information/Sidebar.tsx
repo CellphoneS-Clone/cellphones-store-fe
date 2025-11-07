@@ -15,10 +15,30 @@ import {
     Mail,
     LogOut,
 } from 'lucide-react';
+import { useLogoutMutation } from "@/store/features/authApi";
+import { useState } from 'react';
+
 
 export const Sidebar = () => {
     const pathname = usePathname(); // Hook để lấy đường dẫn hiện tại, dùng để xác định active link.
+    const [userName, setUserName] = useState<string | null>(null);
 
+    const [logout] = useLogoutMutation();
+    const handleLogout = async () => {
+        try {
+            await logout().unwrap();
+            setUserName(null);
+            window.location.href = "/login";
+        } catch (e) {
+            // fallback clear
+            try {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                localStorage.removeItem("user");
+            } catch { }
+            window.location.reload();
+        }
+    };
     // Mảng chứa thông tin các liên kết điều hướng
     const navLinks = [
         { href: '/information', icon: Home, label: 'Tổng quan' },
@@ -71,7 +91,9 @@ export const Sidebar = () => {
                             );
                         })}
                         {/* Nút Đăng xuất */}
-                        <button className="flex text-base items-center group relative transition-colors duration-200 rounded-md text-neutral-600 hover:bg-red-50 hover:text-red-600 font-semibold">
+                        <button
+                            onClick={handleLogout}
+                            className="flex text-base items-center group relative transition-colors duration-200 rounded-md text-neutral-600 hover:bg-red-50 hover:text-red-600 font-semibold">
                             <div className="absolute top-0 left-0 w-1 h-full shrink-0 rounded-r-full transition-colors duration-200 bg-transparent group-hover:bg-red-500"></div>
                             <div className="w-full px-4 py-3 flex items-center gap-3 text-left">
                                 <LogOut className="shrink-0" size={20} />
