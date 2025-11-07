@@ -81,6 +81,25 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // Đăng xuất (client-side): xóa token, reset cache
+    logout: build.mutation<{ success: boolean }, void>({
+      async queryFn(_arg, api) {
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            localStorage.removeItem('user')
+          }
+          // reset RTK Query cache/state
+          api.dispatch(baseApi.util.resetApiState())
+          return { data: { success: true } }
+        } catch (e: any) {
+          return { error: { status: 'CUSTOM_ERROR', error: String(e) } as any }
+        }
+      },
+      invalidatesTags: ['User'],
+    }),
+
     // Lấy thông tin user hiện tại
     me: build.query<UserResponse, void>({
       query: () => ({ url: '/api/v1/me' }),
@@ -91,6 +110,7 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useLogoutMutation,
   useRegisterMutation,
   useVerifyEmailMutation,
   useResendVerificationMutation,
