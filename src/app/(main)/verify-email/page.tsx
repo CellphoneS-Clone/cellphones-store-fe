@@ -5,19 +5,32 @@ import { Mail, CheckCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useVerifyEmailMutation, useResendVerificationMutation } from '@/store/features/authApi';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export default function EmailVerificationPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [verifyEmail, { isLoading: isVerifying }] = useVerifyEmailMutation();
+  const [resendVerification, { isLoading: isResending }] = useResendVerificationMutation();
+  
   const [email, setEmail] = useState('');
   const [verificationCode, setVerificationCode] = useState(['', '', '', '', '', '']);
   const [step, setStep] = useState<'verify' | 'success'>('verify');
   const [error, setError] = useState('');
-  const [isResending, setIsResending] = useState(false);
 
-  // ✅ Lấy email từ localStorage hoặc props (tùy logic backend)
+  // Lấy email từ URL query parameter hoặc localStorage
   useEffect(() => {
+    const emailFromQuery = searchParams.get('email');
     const storedEmail = localStorage.getItem('email') || '';
-    setEmail(storedEmail);
-  }, []);
+    const emailToUse = emailFromQuery || storedEmail;
+    
+    if (emailToUse) {
+      setEmail(emailToUse);
+      // Lưu vào localStorage để dùng cho các lần sau
+      localStorage.setItem('email', emailToUse);
+    }
+  }, [searchParams]);
 
   const handleCodeChange = (index: number, value: string) => {
     if (value.length > 1) return;
@@ -46,29 +59,38 @@ export default function EmailVerificationPage() {
       return;
     }
 
-    // TODO: Gọi API xác minh mã
-    // const response = await fetch('/api/verify-code', { 
-    //   method: 'POST', 
-    //   body: JSON.stringify({ email, code }) 
-    // });
-    // if (!response.ok) {
-    //   setError('Mã xác nhận không đúng');
-    //   return;
-    // }
+    try {
+      setError('');
+      await verifyEmail({ 
+        email, 
+        verification_code: code 
+      }).unwrap();
 
-    setError('');
-    setStep('success');
+      // Nếu không có lỗi, chuyển sang bước success
+      setStep('success');
+    } catch (err: any) {
+      setError(err?.data?.message || 'Mã xác nhận không đúng. Vui lòng thử lại.');
+    }
   };
 
   const handleResend = async () => {
-    setIsResending(true);
-    // TODO: Gọi API gửi lại mã
-    // await fetch('/api/send-verification', { method: 'POST', body: JSON.stringify({ email }) });
+    if (!email) {
+      setError('Vui lòng nhập email');
+      return;
+    }
 
-    setTimeout(() => {
-      setIsResending(false);
+    try {
+      setError('');
+      await resendVerification(email).unwrap();
+      
+      // Nếu thành công, reset code và focus vào ô đầu
       setVerificationCode(['', '', '', '', '', '']);
-    }, 2000);
+      setTimeout(() => {
+        document.getElementById('code-0')?.focus();
+      }, 100);
+    } catch (err: any) {
+      setError(err?.data?.message || 'Không thể gửi lại mã. Vui lòng thử lại.');
+    }
   };
 
   return (
@@ -112,9 +134,10 @@ export default function EmailVerificationPage() {
 
                 <Button
                   onClick={handleVerify}
+                  disabled={isVerifying}
                   className="w-full h-11 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-semibold"
                 >
-                  Xác nhận
+                  {isVerifying ? 'Đang xác nhận...' : 'Xác nhận'}
                 </Button>
 
                 <div className="text-center">
@@ -148,12 +171,13 @@ export default function EmailVerificationPage() {
               <CardContent>
                 <Button
                   onClick={() => {
-                    setStep('verify');
-                    setVerificationCode(['', '', '', '', '', '']);
+                    // Xóa email khỏi localStorage và chuyển đến trang đăng nhập
+                    localStorage.removeItem('email');
+                    router.push('/login');
                   }}
                   className="w-full h-11 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-semibold"
                 >
-                  Hoàn tất
+                  Đăng nhập ngay
                 </Button>
               </CardContent>
             </>
